@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqls SYSTEM "sql_definition.dtd">
+<sqls>
+	<sql group="login">
+		<i id="queryuser">
+			select a.*,b.unit_name,b.unit_id ,b.unit_flag,d.user_level as user_level_name from priv_user
+			a,priv_unit
+			b,priv_unit_user c,priv_user_level d where a.user_account_name = ? and
+			a.user_id
+			=c.user_id
+			and b.unit_id= c.unit_id and a.abate=1 and
+			b.abate=1 and d.user_level_id=a.user_level and c.type='0'
+		</i>
+	</sql>
+	<sql group="login">
+		<i id="queryunit">
+			select unit_id,unit_name,unit_flag,credit_code,subunit_code from (select * from priv_unit b start
+			with unit_id
+			=? connect by prior uper_unit_id=unit_id ) c where
+			c.abate =1 order by unit_coding desc
+		</i>
+	</sql>
+	<sql group="privsys">
+		<i id="queryUserTopFunctions">
+			select distinct c.* from priv_function c, priv_subsystem e,(select distinct
+			b.function_id
+			from priv_user_role a,priv_role_function b where a.user_id=? and
+			a.role_id = b.role_id) d where
+			c.function_id = d.function_id and c.abate =1 and c.uper_function_id =0 and
+			e.subsystem_code =? and
+			e.subsystem_id=c.subsystem_id  order by c.function_sort
+		</i>
+	</sql>
+	<sql group="privsys">
+		<i id="queryUserFunctions_bk">
+			SELECT vv.*,
+			(SELECT COUNT (1)
+			FROM (SELECT function_name,
+			uper_function_id, function_discription,
+			function_id
+			FROM (SELECT
+			DISTINCT f.function_id, f.uper_function_id,
+			f.function_name,
+			f.function_discription
+			FROM priv_function f,
+			priv_role r,
+			priv_role_function rf,
+			priv_user_role ur
+			WHERE f.function_id =
+			rf.function_id
+			AND rf.role_id = r.role_id
+			AND
+			ur.user_id = ?
+			and f.abate =1
+			ORDER BY f.function_id)) pp
+			WHERE
+			pp.uper_function_id = vv.function_id) AS
+			cn
+			FROM (SELECT
+			function_name, uper_function_id, function_discription,
+			function_id,level,function_sort
+			FROM (SELECT DISTINCT f.function_id,
+			f.uper_function_id,
+			f.function_name, f.function_discription,f.function_sort
+			FROM
+			priv_function f,
+			priv_role r,
+			priv_role_function rf,
+			priv_user_role ur
+			WHERE
+			f.function_id = rf.function_id
+			AND rf.role_id = r.role_id
+			and ur.role_id = r.role_id
+			AND ur.user_id =?
+			and f.abate =1
+			ORDER BY f.function_id) t
+			START WITH
+			t.uper_function_id = ?
+			CONNECT BY PRIOR t.function_id =
+			t.uper_function_id order SIBLINGS BY t.function_sort) vv
+		</i>
+		<i id="queryUserFunctions">
+			<![CDATA[
+				SELECT
+				    vv . * ,
+				    (
+				    SELECT
+				        count (1 )
+				    FROM 
+				        (
+				        SELECT
+				            function_name ,
+				            uper_function_id ,
+				            function_discription ,
+				            function_id 
+				        FROM 
+				            (
+				            SELECT
+				                DISTINCT f . function_id ,
+				                f . uper_function_id ,
+				                f . function_name ,
+				                f . function_discription,
+				                f.function_sort 
+				            FROM 
+				                priv_function f ,
+				                priv_role r ,
+				                priv_role_function rf ,
+				                priv_user_role ur,
+				                priv_subsystem s 
+				            WHERE 
+				                f . function_id = rf . function_id 
+				                AND rf . role_id = r . role_id
+				                and r.role_id=ur.role_id 
+				                AND ur . user_id = ? 
+				                and s.subsystem_id=f.subsystem_id
+				                AND s . subsystem_code = ?
+				            ORDER BY 
+				                f.function_sort,f . function_id 
+				            ) 
+				            ) pp 
+				        WHERE 
+				            pp . uper_function_id = vv . function_id ) AS cn 
+				    FROM 
+				        (
+				        SELECT
+				            function_name ,
+				            uper_function_id ,
+				            function_discription ,
+				            function_id ,
+				            function_sort,
+				            LEVEL 
+				        FROM 
+				            (
+				            SELECT
+				                DISTINCT f . function_id ,
+				                f . uper_function_id ,
+				                f . function_name ,
+				                f . function_discription,
+				                f.function_sort 
+				            FROM 
+				                priv_function f ,
+				                priv_role r ,
+				                priv_role_function rf ,
+				                priv_user_role ur,
+				                priv_subsystem s 
+				            WHERE 
+				                f . function_id = rf . function_id 
+				                AND rf . role_id = r . role_id 
+				                and r.role_id=ur.role_id
+				                AND ur . user_id = ? 
+				                and s.subsystem_id=f.subsystem_id
+				                AND s . subsystem_code = ?
+				            ORDER BY 
+				                f.function_sort,f . function_id 
+				            ) t START WITH t . uper_function_id = '0' CONNECT 
+				        BY 
+				            PRIOR t . function_id = t . uper_function_id 
+				            ) vv order by vv.level ,vv.function_sort
+			]]>
+		</i>
+	</sql>
+</sqls>

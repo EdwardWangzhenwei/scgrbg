@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Forms SYSTEM "../../form_definition.dtd">
+<Forms>
+	<form id="fj" implement="loginvalidate_interface" desp="附件上传">
+		<!-- <import language="css" file="pt/res/supervision/css/newcss.css"></import> -->
+		<import language="css" file="pt/res/css/newcss.css"></import>
+		<widgets>
+		  <layout type="BandLayout" name="titleLayout" width="100%"
+				leftSpace="10px"   attr="groupSize:2;" topSpace="5px">
+             <basic name="tp" widget="Label" width="15px" height="20px"
+						backgroundImg="pt/img/imgs.png" />
+				<basic name="ddddd" label="上传附件" widget="Label"  attr="width:80px" leftSpace="10px" />
+			</layout>
+			<layout name="TitleLayout2" type="BandLayout" width="100%" topSpace="5px"
+				attr="groupSize:1;valign:top;align:center;cellpadding:10;cellSpacing:0"
+				class="in-table">
+				<basic name="f1" label="导入" widget="FileUploader" leftSpace="25px" width="400px"
+					referWidgets="union_table,union_table_id" >
+					<value name="destform"></value>
+					<value name="action">uploade</value>
+					<value name="fileTypes">*.*</value>
+					<value name="fileAmount">3</value>
+				</basic>
+				<basic name="union_table" widget="Hidden" default="jd_jdxx"></basic>
+				<basic name="union_table_id" widget="Hidden"></basic>
+			</layout>
+			<!-- <layout type="BandLayout" name="titleLayout3" width="98%"
+				leftSpace="10px" attr="groupSize:2;" topSpace="5px" align="center">
+				<basic name="gb" label="确定" widget="OButton" class="gradual-btnitem"
+					topSpace="10px" width="90px"></basic>
+			</layout> -->
+		</widgets>
+		<extendPoint>
+			<plugin
+				type="cn.com.huadi.aos.hdoa.common.plugin.FjPlugin">
+
+			</plugin>
+		</extendPoint>
+		<!-- <bind element="this" event="onClose"><![CDATA[
+	   		  var zcxx_id=wg('union_table_id');
+	          PT.closeModal(zcxx_id);
+ 		]]></bind>
+		<bind element="gb" event="click"><![CDATA[
+	          PT.closeModal();
+ 		]]></bind> -->		
+	</form>
+</Forms>

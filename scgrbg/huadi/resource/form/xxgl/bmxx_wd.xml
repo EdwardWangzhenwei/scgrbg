@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Forms SYSTEM "../form_definition.dtd">
+<Forms>
+	<form id="bmxx_wd" implement="loginvalidate_interface" desp="部门未读消息" >
+	<css>
+		.status0{
+			position:relative;
+			display: inline-block; 
+			background:url('img/status/ztt.png');
+			background-size:400% 400%;
+			background-position:0px 0px;
+		}
+		.status1{
+			position:relative;
+			display: inline-block;
+			background:url('img/status/ztt.png');
+			background-size:400% 400%;
+			background-position:-1px -20px;
+		}
+		.status2{
+			position:relative;
+			display: inline-block;
+			background:url('img/status/ztt.png');
+			background-size:410% 410%;
+			background-position:-21px -21px;
+		}
+	</css>
+		<import language="css" file="pt/res/css/newcss.css"></import>
+		<import language="javascript" file="pt/res/hdoa/js/render.js"></import>
+		<widgets>
+			<layout type="TableLayout" attr="groupSize:1" width="100%" desp="部门未读消息" height="500px">								
+				 <layout type="TableLayout" width="100%" class="in-table" 
+					attr="groupSize:3;cellspacing:0;cellpadding:0;align:center;" >
+					
+
+
+					<basic name="subsystem" label="业务系统:" width="200px" widget="Edit" leftSpace="-20px" labelWidth="120px"/>
+					<basic name="title" label="标题:" width="200px" widget="Edit" leftSpace="-20px" labelWidth="120px"/>
+				
+					<basic name="search" label="查询" class="gradual-btnitem" width="50px"
+						height="25px"  widget="OButton" leftSpace="50px"  />
+				</layout> 
+		
+				<layout type="TableLayout" width="100%" class="tabcontent" >
+						
+					<basic name="list0" width="100%" height="420px" widget="XListGrid" 
+						attr="seq:true;rh:36px;border:true;idField:mess_id;page:true;pageaction:page;autoColumnWidth:true;refreshBtnShow:false;" >
+
+						<!-- <col label="标题" id="jdxx_id" width="150px" align="center" ></col> -->
+						<col label="标题" id="title" width="150px" align="center" ></col>
+						<col label="密级" id="security" width="150px" align="center" ></col> 
+						<col label="发送人" id="sender" width="150px" align="center" ></col> 
+						<col label="发送时间" id="send_time" width="250px" align="center" ></col>
+						<col label="业务系统" id="subsystem" width="200px" align="center" ></col>
+						<col label="消息内容" id="message" width="250px" align="center" ></col>
+						<col label="打开方式" id="open_type" width="250px" align="center" ishide="true" />
+						<col label="链接" id="open_url" width="250px" align="center" ishide="true" />
+						<!-- <col label="增加人单位" id="zjrdw" width="250px" align="center"  ></col> -->
+					</basic>
+				</layout>
+			</layout>			
+		</widgets>
+		<extendPoint>
+			<plugin type="cn.com.huadi.aos.hdoa.xxgl.plugin.BmwdPlugin"  createEvent="null" onEvent="query;page;sel;verify;getServer" ></plugin>		
+		</extendPoint>
+		<!-- <bind element="this" event="onCreate">
+			<![CDATA[
+				PT.refresh();
+			]]>
+		</bind> -->
+		<!-- 点击查询触发事件  -->	
+		<bind element="search" event="click">
+			<![CDATA[
+				PT.s('query',null,null);
+			]]>
+		</bind>
+		<!-- 双击某条记录以open_type方式打开open_url PT.showForm()/PT.showModal()/tab.add(); -->
+		<bind element="list0" event="dodblclick"  param="r,c,g"><![CDATA[
+			var open_type=r.open_type;
+			
+			var open_url=r.open_url;
+			
+			var mess_id=r.mess_id;
+			alert('有哦由于');
+			var server=PT.ns('getServer',null,null);
+			var tabs = parent.parent.tabs;
+			if(open_type=='页签'){
+				/*tabs.add({
+						url:'../../../canvas?formid='+open_url						
+						});
+					
+				var res=PT.ns('verify',null,'list_id='+list_id);*/	
+				var res=PT.ns('verify',null,'mess_id='+mess_id);	
+				var tab = tabs.getTabByUrl(server+open_url);
+				 if(tab != null){
+		                      tab.load(server+open_url);
+		                      tab.activate();
+	                     }else{
+		                      tabs.add({
+			                  url:server+open_url,
+			                  label:'接待登记修改'
+		                 })
+		                 }	
+			}else if(open_type=='新窗口'){
+				/*PT.showModalForm('+open_url+',null,null,null,null);
+				
+				var res=PT.ns('verify',null,'list_id='+list_id);*/
+				alert(server+open_url);
+				var res=PT.ns('verify',null,'mess_id='+mess_id);
+				window.open(server+open_url);
+			}else if(open_type=='页面跳转'){
+				/*PT.showForm('+open_url+',null,null);
+				
+				var res=PT.ns('verify',null,'list_id='+list_id);*/
+				alert(server+open_url);
+				var res=PT.ns('verify',null,'mess_id='+mess_id);
+				window.location.href=server+open_url;
+			}else if(open_type==null){
+				PT.alert('没有有效数据');
+			}		
+		]]></bind>  
+		<!-- 点击完成上报操作 -->
+		<!-- <bind element="report" event="click"><![CDATA[
+			var sel = w('list0').getSelected();
+			if(sel == null){
+				PT.alert('请选择一条数据！');
+			} else {
+				PT.confirm("是否确定上报？",function(){			
+				 		var res=PT.s('report',null,'jdxx_id='+sel.jdid);
+						if(res == 'success'){
+							PT.refresh(); 
+				}
+				});				
+			}
+		]]></bind>
+		点击弹出增加页面
+		<bind element="add" event="click"><![CDATA[
+			PT.showForm('jddj_add');
+		]]></bind>
+		点击弹出修改页面
+		<bind element="update" event="click"><![CDATA[
+			
+			
+			var tabs = parent.tabs;
+	        var sel = w('list0').getSelected();
+	        if(sel == null){
+				PT.alert('请选择一条数据！');
+			} else {
+				var jdid = sel.jdid;
+	     		var ss=PT.ns('verify',null,"jdxx_id="+jdid);
+			 	if(ss=='failure'){
+			 		PT.alert('该条信息已上报，不能修改！');
+			 		}else{
+				        
+	                     var tab = tabs.getTabByUrl('../../../canvas?formid=jddj_update&jdxx_id='+jdid);
+	                     if(tab != null){
+		                      tab.load('../../../canvas?formid=jddj_update&jdxx_id='+jdid);
+		                      tab.activate();
+	                     }else{
+		                      tabs.add({
+			                  url:'../../../canvas?formid=jddj_update&jdxx_id='+jdid+'&fromurl='+escape(tabs.getCurrentTab().url),
+			                  label:'接待登记修改'
+		                 })
+		                 }
+		                
+	           }
+	      }
+	          
+	        
+	     
+		]]></bind>
+		点击删除
+		<bind element="delete" event="click"><![CDATA[
+			var sel = w('list0').getSelected();
+	 		if(sel == null){
+				PT.alert('请选择一条数据！');
+			} else {
+				/*PT.confirm("该操作不可恢复，是否确定删除？",function(){			
+				 		var s = PT.s('delete',null,'jdxx_id='+sel.jdid);
+				 		if(s == 'success'){
+				 			PT.refresh();
+							}
+				});*/
+				
+				var ss=PT.ns('verify',null,"lbxx_id="+sel.lbxx_id);
+			 	if(ss=='failure'){
+			 		PT.alert('该条信息已上报，不能删除！');			 		
+				}else{
+						PT.confirm("该操作不可恢复，是否确定删除？",function(){			
+				 		var s = PT.s('delete',null,'lbxx_id='+sel.lbxx_id);
+				 		if(s == 'success'){
+				 			PT.refresh();
+							}
+				});
+				}
+		 	}
+		]]></bind> -->
+		
+	</form>	
+</Forms>

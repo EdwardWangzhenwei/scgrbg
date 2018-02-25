@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqls SYSTEM "sql_definition.dtd">
+<sqls>
+	<sql group="xzqy">
+		<i id="getXzqyById">
+			SELECT
+			    t.xzqy_id ,
+			    t.qymc ,
+			    t.uper_xzqy_id ,
+			    t.qyjb ,
+			    t.jc ,
+			    t.bm1 ,
+			    t.bm2 ,
+			    t.bm3 ,
+			    t.pxh ,
+			    tmp.uper_xzqy_id uper_uper_xzqy_id 
+			FROM 
+			    xzqy t ,
+			    (
+			    SELECT
+			        xzqy_id ,
+			        uper_xzqy_id 
+			    FROM 
+			        xzqy ) tmp 
+			WHERE 
+			    t . uper_xzqy_id = tmp . xzqy_id 
+			    AND t . xzqy_id = ?
+		</i>
+		<i id="getXzqyById2">
+			SELECT
+			    t.xzqy_id ,
+			    t.qymc ,
+			    t.uper_xzqy_id ,
+			    t.qyjb ,
+			    t.jc ,
+			    t.bm1 ,
+			    t.bm2 ,
+			    t.bm3 ,
+			    t.pxh ,
+			    0 uper_uper_xzqy_id 
+			FROM 
+			    xzqy t 
+			WHERE 
+				1 = 1
+			    AND t . xzqy_id = ?
+		</i>
+		<i id="deleteById">
+			delete from xzqy where xzqy_id=?
+		</i>
+	</sql>
+</sqls>

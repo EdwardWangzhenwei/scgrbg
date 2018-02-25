@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Forms SYSTEM "../form_definition.dtd">
+<Forms>
+	<form id="grxx" implement="loginvalidate_interface" desp="个人消息管理" >
+	<css>
+		.status0{
+			position:relative;
+			display: inline-block; 
+			background:url('img/status/ztt.png');
+			background-size:400% 400%;
+			background-position:0px 0px;
+		}
+		.status1{
+			position:relative;
+			display: inline-block;
+			background:url('img/status/ztt.png');
+			background-size:400% 400%;
+			background-position:-1px -20px;
+		}
+		.status2{
+			position:relative;
+			display: inline-block;
+			background:url('img/status/ztt.png');
+			background-size:410% 410%;
+			background-position:-21px -21px;
+		}
+	</css>
+		<import language="css" file="pt/res/css/newcss.css"></import>
+		<import language="javascript" file="pt/res/hdoa/js/render.js"></import>
+		<widgets>
+			<layout type="TabLayout" name="grxx_show" width="100%"
+					topSpace="10px">
+					<layout type="BandLayout" name="tab0" desp="个人未读" topSpace="0px"
+						width="100%" attr="groupSize:1;" height="480px" >
+						<basic name="frame0" widget="Frame" width="100%" ></basic>
+					</layout>
+					<layout type="BandLayout" name="tab1" desp="个人已读"
+						topSpace="0px" width="100%" attr="groupSize:1;" height="480px" >
+						<basic name="frame1" widget="Frame" width="100%" >
+						</basic>
+					</layout>
+			</layout>	
+		</widgets>
+		<extendPoint>
+			<!-- <plugin type="cn.com.huadi.aos.hdoa.jddj.Plugin.JddjPlugin"  createEvent="null" onEvent="query;page;report;delete;verify;sel" ></plugin>		 -->
+		</extendPoint>
+		<!-- <bind element="this" event="onCreate">
+			<![CDATA[
+				PT.refresh();
+			]]>
+		</bind> -->
+		<!-- 点击查询触发事件  -->	
+		<bind element="grxx_show" event="dochange" param="m"><![CDATA[
+			/*var msg = wg('msg');
+			if(msg == 'null'){
+				alert('本处室本周及下周暂无值班数据，请添加后查看');
+				return;
+			}*/
+			var obj = w('grxx_show').getData();
+			var code = obj.code;
+			var height=w('tab0').style.height;
+			
+			if(code == 'tab0'){
+				w('frame0').height=height;
+				w('frame0').showForm('grxx_wd',null,null);
+			}else if(code == 'tab1'){
+				w('frame1').height=height;
+				w('frame1').showForm('grxx_yd',null,null);
+			}
+			
+		]]></bind>
+	</form>	
+</Forms>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+
+	<display-name>aisino</display-name>
+	<distributable/>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:spring/*.xml classpath:org/codehaus/xfire/spring/xfire.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:spring/*.xml</param-value>
+	</context-param>
+	<listener>
+		<display-name>StartListener</display-name>
+		<listener-class>com.aisino.platform.veng.servlet.ResourceLoadListener</listener-class>
+	</listener>
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/error.html</location>	    
+	</error-page>
+	<mime-mapping>  
+	   <extension>doc</extension>     
+	   <mime-type>application/msword</mime-type>     
+	</mime-mapping>     
+	<mime-mapping>     
+	   <extension>xls</extension>     
+	   <mime-type>application/vnd.ms-excel</mime-type>     
+	</mime-mapping>     
+	<mime-mapping>     
+	   <extension>ppt</extension>     
+	   <mime-type>application/vnd.ms-powerpoint</mime-type>     
+	</mime-mapping>
+	<servlet>
+		<description>Apache CXF Endpoint</description>
+		<display-name>cxf</display-name>
+		<servlet-name>cxf</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>cxf</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>xfire</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	</servlet>  
+	 <servlet>
+       <servlet-name>RegServiceServlet</servlet-name>
+       <servlet-class> cn.com.huadi.aos.hdoa.common.servlet.RegServiceServlet</servlet-class>
+       <load-on-startup>1</load-on-startup>
+   </servlet>
+	<servlet-mapping>
+		<servlet-name>xfire</servlet-name>
+		<url-pattern>*.ws</url-pattern>
+	</servlet-mapping>
+ <filter>
+		<filter-name>Session Timeout Filter</filter-name>
+		<filter-class>
+			cn.com.huadi.aos.hdoa.common.filter.SessionTimeoutFilter
+		</filter-class>
+		<init-param>
+			<param-name>redirectURL</param-name>
+			<param-value>/pt/res/hdoa/sessionCheck.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>exceptFiles</param-name>
+			<param-value>
+				/pt/res/hdoa/ssologin.jsp#/canvas?formid=login#/pt/res/hdoa/sessionCheck.jsp#/pt/res/hdoa/duchalogin.jsp#/canvas?formid=pt_reload#/services/#/ptfile#/pt/res/hdoa/wpsedit/upload.jsp#/pt/res/hdoa/wpsedit/upload2.jsp#/pt/res/hdoa/wpsedit/ShowDzwj.jsp#/pt/res/hdoa/wpsedit/#/pt/res/hdoa/ssologin.jsp#/pt/res/hdoa/wpsedit/#/pt/res/hdoa/foxit/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>exceptFileTypes</param-name>
+			<param-value>
+			   .css#.js#.style#.jscript#.jpg#.png#.gif#.wpt</param-value>
+		</init-param>
+		<init-param>
+			<param-name>enable</param-name>
+			<param-value>true</param-value>
+		</init-param>	
+	</filter>
+	<filter-mapping>
+		<filter-name>Session Timeout Filter
+		</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>

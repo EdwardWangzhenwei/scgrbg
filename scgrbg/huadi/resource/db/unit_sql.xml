@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqls SYSTEM "sql_definition.dtd">
+<sqls>
+	<sql group="unit">
+		<i id="getUnitById">
+			SELECT
+			    t.unit_id ,
+			    t.unit_name ,
+			    t.uper_unit_id ,
+			    t.unit_sort ,
+			    t.unit_discription ,
+			    t.unit_coding ,
+			    t.unit_leader_id ,
+			    t.unit_leader_name ,
+			    t.unit_uperleader_id ,
+			    t.unit_uperleader_name ,
+			    t.abate ,
+			    t.isvirtual,
+			    t.unit_flag,
+			    tmp.uper_unit_id uper_uper_unit_id 
+			FROM 
+			    priv_unit t ,
+			    (
+			    SELECT
+			        unit_id ,
+			        uper_unit_id 
+			    FROM 
+			        priv_unit ) tmp 
+			WHERE 
+			    t . uper_unit_id = tmp . unit_id 
+			    AND t . unit_id = ?
+		</i>
+		<i id="getUnitById2">
+			SELECT
+			    t.unit_id ,
+			    t.unit_name ,
+			    t.uper_unit_id ,
+			    t.unit_sort ,
+			    t.unit_discription ,
+			    t.unit_coding ,
+			    t.unit_leader_id ,
+			    t.unit_leader_name ,
+			    t.unit_uperleader_id ,
+			    t.unit_uperleader_name ,
+			    t.abate ,
+			    t.isvirtual,
+			    t.unit_flag,
+			    0 uper_uper_unit_id 
+			FROM 
+			    priv_unit t 
+			WHERE 
+				1 = 1
+			    AND t . unit_id = ?
+		</i>
+		<i id="deleteById">
+			delete from priv_unit where unit_id=?
+		</i>
+	</sql>
+</sqls>

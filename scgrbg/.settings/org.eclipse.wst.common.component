@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="scjd">
+        <wb-resource deploy-path="/" source-path="/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/huadi/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/huadi/resource"/>
+        <property name="java-output-path" value="/scjd/build/classes"/>
+        <property name="context-root" value="scgrbg"/>
+    </wb-module>
+</project-modules>

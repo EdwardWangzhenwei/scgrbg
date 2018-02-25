@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ParameterList>
+	<!-- 系统中用到的参数按以下格式配置 -->
+  	<Parameter>
+		<ParameterName>uploadPath</ParameterName>
+
+		<ParameterValue>E:\\work\\jd_up_file\</ParameterValue>
+
+	</Parameter> 
+	<Parameter>
+		<ParameterName>portalUrl</ParameterName>
+		<ParameterValue>http://192.168.58.115:8080/scdbtx/canvas?formid=login</ParameterValue>
+	</Parameter>
+	<Parameter>
+		<ParameterName>client_server</ParameterName>
+		<ParameterValue>http://192.168.58.114:80</ParameterValue>
+	</Parameter>
+	<Parameter>
+		<ParameterName>refreshTime</ParameterName>
+		<ParameterValue>1000*60*10</ParameterValue>
+	</Parameter>
+	
+	<!-- <Parameter>
+		<ParameterName>client_server</ParameterName>
+		<ParameterValue>http://192.168.58.64:8081</ParameterValue>
+	</Parameter> -->
+	<Parameter>
+		<ParameterName>cas_sever</ParameterName>
+		<ParameterValue>http://192.168.58.115:8080/sso/</ParameterValue>
+	</Parameter>
+ 	<Parameter>
+		<ParameterName>home</ParameterName>
+		<ParameterValue>http://192.168.58.114:80/scdbtx/canvas?formid=login</ParameterValue>
+	</Parameter>
+	<!--	<Parameter>
+		<ParameterName>home</ParameterName>
+		<ParameterValue>http://192.168.58.115:8800/swportal/front/index-3.html</ParameterValue>
+	</Parameter> -->
+
+		<!-- <Parameter>
+		<ParameterName>home</ParameterName>
+		<ParameterValue>/scdbtx/canvas?formid=login</ParameterValue>
+
+	</Parameter> -->
+</ParameterList>

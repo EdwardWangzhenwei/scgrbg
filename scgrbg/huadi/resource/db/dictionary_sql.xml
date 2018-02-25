@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqls SYSTEM "sql_definition.dtd">
+<sqls>
+	<sql group="dictionary">
+		<i id="getNewDictionaryId"><![CDATA[
+			select nvl(max(DICT_ID)+1,1) from DICT_DICTIONARY where 1={}
+		]]></i>
+		<i id="getDictionaryInfoById"><![CDATA[
+			select * from DICT_DICTIONARY where DICT_ID={}
+		]]></i>
+		<i id="getDictionaryInfoByUperId"><![CDATA[
+			select * from DICT_DICTIONARY where UPER_DICT_ID={} and
+			show_flag=1
+		]]></i>
+		<i id="getDictionaryInfoByCode"><![CDATA[
+			SELECT
+			    d . * 
+			FROM 
+			    dict_category AS c ,
+			     dict_dictionary AS d ,
+			     dict_group AS G 
+			WHERE 
+			    c . category_id = G . category_id 
+			    AND G . group_code = d . group_code 
+			    and d.show_flag=1
+			    AND G . group_code = {} 
+			    AND d . dict_code = {}
+		]]></i>
+		<i id="getDictionaryTreeByGroup"><![CDATA[
+		 select 
+				dict.dict_id code,
+				decode(EFFECTIVE_FLAG,1,dict_name,concat(dict_name,'(无效)'))  name,
+				dict.UPER_DICT_ID as fatherid, 
+				dict.DICT_ORDER as orderby
+			from 
+				DICT_DICTIONARY dict
+			where 
+				 dict.group_code={} and show_flag=1
+		]]></i>
+		<i id="getUperIsLeafById"><![CDATA[
+			select DICT_ID from DICT_DICTIONARY where UPER_DICT_ID=(
+			select
+			UPER_DICT_ID from DICT_DICTIONARY where DICT_ID={}) and
+			show_flag=1
+		]]></i>
+		<!-- <i id="getDictionaryInfoByGroupCode"><![CDATA[ 
+			select dict_code as 
+			code,dict_name as name,dict_order from DICT_DICTIONARY where group_code ={} 
+			and show_flag=1 order by dict_order 
+			]]></i> -->
+
+
+		<i id="getDictionaryInfoByGroupCode"><![CDATA[
+			SELECT
+			    d.dict_code as code,d.dict_name as name,d.dict_order 
+			FROM 
+			    dict_category AS c ,
+			    dict_dictionary AS d ,
+			    dict_group AS g 
+			WHERE 
+				c . category_id = g . category_id 
+			    AND g . group_code = {} 
+			    AND g . group_code = d . group_code
+			    AND show_flag=1 
+			    order by dict_order
+		]]></i>
+		<i id="getDictionaryByGroupCode"><![CDATA[
+			select dict_code as code,dict_name as name from
+			DICT_DICTIONARY where
+			group_code ={} and show_flag=1
+		]]></i>
+		<i id="getDictionaryInfoByGroupName"><![CDATA[
+			select dict.dict_code code,dict.dict_name name from
+			DICT_DICTIONARY
+			dict,dict_group groups where
+			dict.group_code=groups.group_code and
+			groups.group_name={} and
+			dict.show_flag=1 order by dict.dict_code
+		]]></i>
+		<!-- <i id="getDictionaryByGroupNameAndSecret"> select dict.dict_code code,dict.dict_name 
+			name from DICT_DICTIONARY dict,dict_group groups where dict.group_code=groups.group_code 
+			and groups.group_name={} and dict.dict_code &lt;= {} order by dict.dict_code 
+			</i> -->
+		<i id="getDictionaryByGroupNameAndSecret"><![CDATA[
+			SELECT
+			    dict . dict_code code ,
+			    dict . dict_name NAME 
+			FROM 
+			     dict_category AS c ,
+			     dict_dictionary dict ,
+			     dict_group groups 
+			WHERE 
+			    c . category_id = groups . category_id 
+			    AND dict . show_flag = '1' 
+			    AND dict . group_code = groups . group_code 
+			    AND groups . group_code = {} 
+			    AND dict . dict_code <= {} 
+			ORDER BY 
+			    dict . dict_code
+		]]></i>
+		<i id="getDictionaryNameByGroupName"><![CDATA[
+			select
+			dict.dict_name code,
+			dict.dict_name name
+			from
+			DICT_DICTIONARY dict,
+			dict_group groups,
+			DICT_CATEGORY category
+			where
+			category.CATEGORY_NAME={}
+			and category.CATEGORY_ID = groups.CATEGORY_ID
+			and
+			dict.group_code=groups.group_code
+			and groups.group_name={}
+			and dict.show_flag=1
+			order by dict.dict_code
+		]]></i>
+	</sql>
+</sqls> 

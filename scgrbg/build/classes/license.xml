@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<license serial="575933141052862317" project="A6" title="航天信息Aisino ERP" authorizedto="华迪" dog="n" type="develop">
+<limit concurrent="3" expiration="2017-05-01" maxdb="3" hardware="123" clients="3" maxform="6000"></limit>
+<key>35e11f456b5b8b14e7081708bdd45071df431ca651f5038a47dcfa8d80853db4959328ae3709fb260de54f20d6765c210c21f17e6a55d58bbd60ab943dc7db4bda373e07e9ce14416d2949c5356bce19fa153feaa96043c575a0a2c114beb5eae030824b949aa4fcce57d848d4d015e33323ccf29e28fea30f2307d8a4e700735bde87f2f4e9c9bda6b62b8e59cdd925ddf2b1ba7c526b8ff36d18db12e444ac9d10f0de66056f28f42da7f8364dfde8f281de2be493e302fb0d9c8eb67c581310051a72c25569d78239d5eb7c0b92e13a999a2d593abcb2ca7876ce33269b512ae8691726be8c8574b24ba65cc3d7657e2c1447ba14d4bfab2e5f04c5bb2a8f</key>
+</license>
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<license serial="001" project="A6" title="航天信息Aisino ERP A6" authorizedto="未知" version="6.3" dog="n" type="develop" timestamp="558220267000004102">
+<limit concurrent="2" expiration="2016-02-19" maxdb="2" clients="100" maxform="6000"></limit>
+<key>20d3c0e25272551da75524d7d46043a14ebe85c758abca198af05ecccd181c167690063c5ee6f8662844ce7df6ad4ed9700099e4bcd2fa48bfc750a8f9cf997b34ca4e3470ea91d751eac2bf4a05e88700eb09876a223d496f53af9cdf98ee71eaa4a9e2901180d98839d417fa8aff2420d9c11a056427e627a3c007f87de1eeb4be2b95c7abee9dc947d0fdb34f4f341180caff61ea5deafdcaf7984a92844a4c320f65fddee56fb56647cf5470545c2c8e38f704465f5728736f0f76789f3c9eac64fb438e2ca09b09d1ad7ac9b935099163c9af0844d6d21e75925944b871cba1219dee9fb2baccc2b55931c4703ce7b5d62dd9ed86d2e59aa1a5d337d25c</key>
+</license> -->

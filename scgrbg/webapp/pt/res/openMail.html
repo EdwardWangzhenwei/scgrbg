@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">  
+<html>  
+<head>  
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">  
+<script language="javascript"><!--  
+function init(){  
+    var args = dialogArguments;  
+    var url = "mailto:" + args[0];
+    if(args[1])
+    	url=url+ "&cc=" + args[1] ;
+    url=url+ "?subject=" + args[2] + "&body=" + args[3];  
+    location.href = url;  
+    self.close();  
+}  
+// -->  
+</script>  
+</head>  
+<body onload="init()">  
+<p>  
+  
+</body>  
+</html> 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqls SYSTEM "sql_definition.dtd">
+<sqls>
+	<sql group="hydj">
+		<i id="queryByPage">
+		<!-- SELECT h.hy_id,h.hymc,h.hydd,h.hylx,to_char(h.kssj,'yyyy-MM-dd HH24:mi:ss') as kssj,
+				to_char(h.jssj,'yyyy-MM-dd HH24:mi:ss') as jssj,h.cbrcs,h.cbr,h.hyzt FROM HY_JBXX h 
+		s.append("and $like(h.hymc,hymc)");
+		s.append(" and $like(h.hydd,hydd)");
+		s.append(" and $like(h.hylx,hylx)"
+		order by h.kssj -->
+		</i>
+		<i id="queryMaxHyxh">
+		<!-- select CASE WHEN max(hyxh) IS NULL THEN 0 ELSE max(hyxh) END AS id  from hy_jbxx  where  cbcs=? and hynh=? -->
+		<!-- select nvl(max(hyxh)+1,1) as id  from hy_jbxx where cbcs=? and hynh=? -->
+		select nvl(max(hyxh)+1,1) from hy_jbxx where cbcs=? and hynh=?
+		</i>
+		<i id="queryMaxHyxh">
+		<!-- select max(HYXH) as id from hy_jbxx");
+		s.append(" where cbcs='").append(arg1.get("cbcs")).append("'");
+		s.append(" and hynh=").append(arg1.get("cbcs" -->
+		</i>
+	</sql>
+</sqls>

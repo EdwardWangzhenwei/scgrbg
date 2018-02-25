@@ -1,0 +1,118 @@
+gw_ldps表添加ldpspz_id字段 integer(已删除)
+gw_wjxs表去掉wz_id字段
+gw_fw表添加ngrq字段 date
+---------added by hbj 2016-06-23
+gw_mbgl表增加lrrid,lrsj,mbwjmc 
+
+gw_ldps表删除ldpspz_id字段 integer
+----------added by hbj 2016-07-05
+gw_fwqd 添加unittype 表示发文单位的类型  jsdw 表示从自定义接收单位获得 unit表示从权限系统获得
+                            添加mj       表示发文单位的密级
+gw_gwjh 添加swdwid 收文单位ID    从gw_fwqd的jsdwid
+                            添加 swdwlx 收文单位类型         从  gw_fwqd的unittype获得
+                            
+------------update by lwf 2016-07-11 start------------
+privsys.priv_user_log表：
+OPERATE_DATE	TIMESTAMP(6)改为DATE
+          IP	CHAR(10)改为VARCHAR2(20)
+ MAC_ADDRESS 	CHAR(10)改为VARCHAR2(20)
+     UNIT_ID 	NUMBER(10)改为VARCHAR2(50)
+     
+privsys.priv_sysauditlog表：
+OPERATE_DATE	TIMESTAMP(6)改为DATE
+          IP	CHAR(10)改为VARCHAR2(20)
+ MAC_ADDRESS 	CHAR(10)改为VARCHAR2(20)
+     UNIT_ID 	NUMBER(10)改为VARCHAR2(50)
+     USER_ID	CHAR(10)改为VARCHAR2(20)
+        TYPE	CHAR(10)改为VARCHAR2(50)
+        
+privsys.priv_sysauditlog表：
+OPERATE_DATE	TIMESTAMP(6)改为DATE
+          IP	CHAR(10)改为VARCHAR2(20)
+ MAC_ADDRESS 	CHAR(10)改为VARCHAR2(20)
+     UNIT_ID 	NUMBER(10)改为VARCHAR2(50)
+------------update by lwf 2016-07-11 and--------------
+
+
+------------update by gw_sw 2016-07-12 start--------------
+以下是添加的字段
+ZS	VARCHAR2(32)	Y			
+CS	VARCHAR2(32)	Y			
+FWFS	INTEGER	Y			
+ZXFW	VARCHAR2(32)	Y			
+XBRQ	TIMESTAMP(6)	Y			
+MDMS	VARCHAR2(32)	Y			
+GKXS	VARCHAR2(32)	Y			
+GKYY	VARCHAR2(32)	Y			
+DZGWFS	INTEGER	Y			
+ZZGWFS	INTEGER	Y			
+FBCC	VARCHAR2(32)	Y			
+YFRQ	TIMESTAMP(6)	Y			
+NGDW	VARCHAR2(32)	Y			
+NGR	VARCHAR2(32)	Y			
+NGRDH	VARCHAR2(32)	Y			
+NGRQ	TIMESTAMP(6)	Y			
+------------update by gw_sw 2016-07-12 and--------------
+------------update by gw_ldps 2016-07-15 start--------------
+以下是添加的字段
+TJR_ID	INTEGER	Y			添加人id
+YJR_ID	INTEGER	Y			意见人id
+------------update by gw_ldps 2016-07-15 and--------------
+
+
+------------add by lwf 2016-11-07 start------------
+该表用于GW_LDPSPZ表，意见类型记录同流程节点或者人员级别关联
+CREATE TABLE GWSYS.GW_LDPSPZ_YJ
+(
+    LDPSPZ_YJ_ID numeric(126,0) NOT NULL,
+    LDPSPZ_ID numeric(126,0) ,
+    MC varchar(64) ,--名称，此字段值同gzl_flowrole.fr_name或者priv_user_level.user_level字段值相同
+    ZT varchar(8) DEFAULT '0' , --状态：-1删除 0正常
+    CONSTRAINT TBL_GW_LDPSPZ_YJ_PKEY PRIMARY KEY (LDPSPZ_YJ_ID), 
+    CONSTRAINT FK_GW_LDPSPZ_ID FOREIGN KEY (LDPSPZ_ID) REFERENCES GWSYS.GW_LDPSPZ(LDPSPZ_ID) DEFERRABLE INITIALLY DEFERRED
+)  
+ BINLOG ON ;
+ 添加序列 CREATE SEQUENCE GWSYS.SEQ_LDPSPZ_YJ INCREMENT 1 MINVALUE 1 START 1 NO CACHE  NO CYCLE 
+------------update by lwf 2016-11-07 end-----------
+
+日常办公-工作事物管理：
+工作主题（GWSYS.RCBG_GZSW.GZZT）、内容（GWSYS.RCBG_GZSW.NR）对应字段前端及数据库字符长度控制在100，保持一致。
+公文管理-发文管理：
+发文起草、办理页面的“公开原因（GWSYS.FW.GKYY）”、“密点描述（GWSYS.FW.MDMS）”对应字段前端及数据库控制在256，保持一致
+
+------------update by lwf 2017-03-10 start---------
+在GW_WJXS表添加字段：
+WZ varchar 64 标注当前操作文件形式所属文种：如纪要、函等
+
+在GW_FZXX表添加字段：
+LSH varchar 5 制作公文标识用的流水号
+DZGWBS varchar 64 公文标识
+ISYGD  varchar 10 default 0 是否预归档：0未预归档 1已预归档
+
+在GW_FW表添加字段：
+CX	varchar 256 出席（纪要文种用）
+QJ	varchar 256 请假（纪要文种用）
+LX	varchar 256 列席（纪要文种用）
+QFRZW	varchar 64 签发人职务		命令（令）文种用
+------------update by lwf 2017-03-10 end-----------
+------------update by lwf 2017-03-31 start-----------
+在GW_FW表添加字段：
+YFJG character varying(128) 印发机关
+FWJGSM character varying(128) 发文机关署名
+CWRQ timestamp without time zone 成文日期
+FZ character varying(256) 附注
+DW character varying(256) 单位（起草议案文件用）
+------------update by lwf 2017-03-31 end-----------
+
+------------update by lwf 2017-05-03 start-----------
+“系统管理员”登录权限系统，“功能维护”-“电子公文处理系统”下，
+将“公文管理”-“送审签管理”-“起草办公厅送审签”的“功能说明（URL）”formid值改为“selectwz2&lx=ssq”
+将“公文管理”-“送审签管理”-“起草办公厅请示签”的“功能说明（URL）”fformid值改为“selectwz2&lx=qsq”
+将“公文管理”-“收文管理”-“收文登记”的“功能说明（URL）”fformid值改为“selectwz2&lx=sw”
+------------update by lwf 2017-05-03 end-----------
+
+------------update by lwf 2017-05-22 start-----------
+BOC_NAME character varying(64)
+alter table GWSYS.GZL_BUSINESS_OBJECT_CLASS modify BOC_NAME VARCHAR(64);
+------------update by lwf 2017-05-22 end-----------
+

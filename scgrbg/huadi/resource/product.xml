@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<product name="A6" title="航天信息Aisino ERP" version="5.0">
+	<deploy mode="product" profile="false" scriptDebug="false" gzip="false"></deploy>	
+	<default theme="blue" language="zh_cn"></default>	
+	<property name="TableInfo_CacheSize" >100</property>
+	<property name="Eso_CacheSize">50</property>
+	<property name="upload.maxsize">200</property>
+ 	<property name="upload.dir">nne</property>    
+ 	<property name="businesskeybatch">50</property>
+ 	<property name="lowmemory">true</property>
+ 	<property name="guochan">true</property>
+	<datasource default="hddbtx" systemEvn="orgntest" >
+	    <!--当连接池中的连接耗尽的时候,一次同时获取的连接数。Default: 3 -->
+	　　<property name="acquireIncrement">3</property>
+	　　<!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->
+	　　<property name="acquireRetryAttempts">30</property>
+	　　<!--两次连接中间隔时间，单位毫秒。Default: 1000 -->
+	　　<property name="acquireRetryDelay">1000</property>
+	　　<!--连接关闭时默认将所有未提交的操作回滚。Default: false -->
+	　　<property name="autoCommitOnClose">false</property>
+	　　<!--将建一张名为Test的空表，并使用其自带的查询语句进行测试。如果定义了这个参数那么属性preferredTestQuery将被忽略。你不能在这张Test表上进行任何操作，它将只供测试使用。Default: null-->
+	　<!--　<property name="automaticTestTable">Test</property>
+	　　获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试获取连接失败后该数据源将申明已断开并永久关闭。Default: false-->
+	　　<property name="breakAfterAcquireFailure">false</property>
+	　　<!--当连接池用完时客户端调用getConnection()后等待获取新连接的时间，超时后将抛出SQLException,如设为0则无限期等待。单位毫秒。Default: 0 -->
+	　　<property name="checkoutTimeout">6000</property>	　	　　	　　
+	　　<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
+	　　<property name="idleConnectionTestPeriod">60</property>
+	　　<!--初始化时获取三个连接，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
+	　　<property name="initialPoolSize">3</property>
+	　　<!--最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+	　　<property name="maxIdleTime">60</property>
+	　　<!--连接池中保留的最大连接数。Default: 15 -->
+	　　<property name="maxPoolSize">20</property>
+	　　<!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0-->
+	　　<property name="maxStatements">0</property>
+	　　<!--maxStatementsPerConnection定义了连接池内单个连接所拥有的最大缓存statements数。Default: 0 -->
+	　　<property name="maxStatementsPerConnection">0</property>
+	　　<!--异步操作的线程数，缓慢的JDBC操作通过帮助进程完成。扩展这些操作可以有效的提升性能通过多线程实现多个操作同时被执行。Default: 3-->
+	　　<property name="numHelperThreads">3</property>
+	　　<!--定义所有连接测试都执行的测试语句。在使用连接测试的情况下这个一显著提高测试速度。注意：测试的表必须在初始数据源的时候就存在。Default: null-->
+	  <ds id="acc_sys" type="gbase" version="10"  name="acc_sys" encrypt="false">
+<link ip="192.168.58.112" port="9488" dbname="hdoa:GBASEDBTSERVER=gbaseserver;DB_LOCALE=zh_CN.GB18030-2000;CLIENT_LOCALE=zh_CN.GB18030-2000;NEWCODESET=GB18030,GB18030-2000,5488;IFX_LOCK_MODE_WAIT=100;DBDATE=Y4MD" user="hdoa" pwd="12345" timeout="20000"/>
+ </ds>
+ <ds id="hddbtx" type="gbase" version="10"  name="hddbtx" encrypt="false">
+<link ip="192.168.58.112" port="9488" dbname="hddbtx:GBASEDBTSERVER=gbaseserver;DB_LOCALE=zh_CN.GB18030-2000;CLIENT_LOCALE=zh_CN.GB18030-2000;NEWCODESET=GB18030,GB18030-2000,5488;IFX_LOCK_MODE_WAIT=100;DBDATE=Y4MD" user="hddbtx" pwd="12345" timeout="20000"/>
+ </ds>
+	</datasource>
+	<property name="globecss">
+	.XGrid-headtable-td-div {
+		/* TEXT-ALIGN: left; */
+		TEXT-ALIGN: center;
+		PADDING-LEFT: 5px;
+		FONT-SIZE: 12px;
+		FONT-WEIGHT: bold;
+	   vertical-align: middle ;
+	}
+		.XGrid-bodytable-td-div  {
+		/* TEXT-ALIGN: left; */
+		white-space:nowrap!important;
+		word-wrap:normal!important;
+		overflow:hidden!important;
+		text-overflow:ellipsis!important;
+	
+	}
+<!--  .bsw-c {
+				font-size:14px !important;
+			    display: inline-block;
+			    vertical-align: middle;
+			} -->
+	.e-calendar-popup {
+	width:250px!important;
+	height:250px!important;
+  }
+  	.calendar-div {
+	width:250px!important;
+	height:250px!important;
+  }
+.spanImg{
+	width:15px;
+	margin:0;
+	padding:0;
+	border:0;
+	cursor:pointer;
+	display:inline-block;
+	vertical-align:middle;
+	position:relative;
+	
+}
+.spanImg img{ 
+ float:left;
+}
+  
+INPUT{	
+       border:1px solid #BCC2C7; /*#999999*/
+	   vertical-align: middle ;
+       padding-left:2px;
+       height:21px!important;
+       outline: none; 
+       line-height:100%!important;
+}  
+
+INPUT.readonly{
+       border:1px solid #CCCCCC;
+	   background-color: #fbfbfb;
+	   color: black;
+	   height:21px!important;
+	   outline: none;  
+	   vertical-align: middle ;
+	   line-height:100%!important;
+}
+
+select {
+    height:21px!important;
+    border: 1px solid #7a9cd3;
+    outline: none;
+    line-height:100%!important;
+}
+
+
+</property></product>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqls SYSTEM "sql_definition.dtd">
+<sqls>
+	<sql group="sw">
+		<i id="getShouWenById">
+			SELECT
+			sw.*,fzxx.*,wjxs.wjxs,n.*,sw.wjxs as sw_wjxs
+			FROM
+			gw_sw sw,gw_fzxx fzxx,gw_wjxs
+			wjxs,gzl_node n
+			WHERE
+			SW.wjbm = fzxx.wjbm
+			and wjxs.wjxs_id=fzxx.wjxs_id
+			and n.fi_objectid=SW.wjbm
+			<!-- and n.n_status=0 -->
+			AND n.n_id=?
+		</i>
+		<i id="getShouWenById3">
+			SELECT
+			sw.*,fzxx.*,wjxs.wjxs,n.*,sw.wjxs as sw_wjxs
+			FROM
+			gw_sw sw,gw_fzxx fzxx,gw_wjxs
+			wjxs,gzl_node n
+			WHERE
+			SW.wjbm = fzxx.wjbm
+			and wjxs.wjxs_id=fzxx.wjxs_id
+			and n.fi_objectid=SW.wjbm
+	        AND n . n_executor = ? 
+		    AND sw . wjbm = ?
+		    order by n_id desc
+		</i>
+		<i id="queryShouWen">
+			SELECT distinct SW.WJBM,SW.LWDW,TO_CHAR(SW.LWSJ,'YYYY-MM-DD
+			HH24:MI:SS') AS
+			LWSJ,SW.YWZY,SW.FS,SW.YS,SW.ZWFS,SW.ZWYS,SW.FJFS,SW.nbhz,
+			SW.FJYS,SW.WJFW,SW.WJXS,TO_CHAR(SW.BFSX,'YYYY-MM-DD HH24:MI:SS') AS
+			BFSX,SW.NBZH,SW.NBNH,SW.NBXH,SW.ZBBM,SW.ZBCBR,SW.XBBM,SW.XBCBR,SW.FW_GWBM,
+			FZXX.WJXS_ID,FZXX.SSDWID,FZXX.WJLX,FZXX.BT,FZXX.MJ,FZXX.BMQX,FZXX.QXLB,FZXX.JJCD,FZXX.ZH,FZXX.NH,
+			FZXX.XH,FZXX.HZ,FZXX.WHXSGZ,FZXX.LLR,FZXX.LLR_ID,TO_CHAR(FZXX.LRSJ,'YYYY-MM-DD
+			HH24:MI:SS') AS
+			LRSJ,FZXX.LRBM,FZXX.LRBM_ID,FZXX.LRDW,FZXX.LRDW_ID,
+			FZXX.ZT,FZXX.ZTR,TO_CHAR(FZXX.ZTSJ,'YYYY-MM-DD HH24:MI:SS') AS
+			ZTSJ<!-- ,N.* -->
+			FROM GW_FZXX FZXX,GW_SW SW,GW_WJXS WJXS,gzl_node n WHERE SW.WJBM=FZXX.WJBM AND
+			FZXX.WJXS_ID=WJXS.WJXS_ID AND N.FI_OBJECTID=FZXX.WJBM <!-- AND N.N_STATUS=0 -->
+		</i>
+	</sql>
+</sqls>

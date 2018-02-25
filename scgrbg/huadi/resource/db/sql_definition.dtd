@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT sqls (sql+)>
+<!ELEMENT sql ((i|o)+)>
+<!ELEMENT i (#PCDATA)>
+<!ELEMENT o (select,from+,join*,where?,group*,order*,having?)>
+<!ELEMENT select (#PCDATA)>
+<!ELEMENT from (def*)>
+<!ELEMENT join EMPTY>
+<!ELEMENT where (#PCDATA)>
+<!ELEMENT group EMPTY>
+<!ELEMENT order EMPTY>
+<!ELEMENT having (#PCDATA)>
+<!ELEMENT def (#PCDATA)>
+<!ATTLIST sql	
+	group CDATA #REQUIRED
+	desp CDATA #IMPLIED
+>
+<!ATTLIST i
+	id CDATA #REQUIRED	
+	desp CDATA #IMPLIED
+>
+<!ATTLIST o
+	id CDATA #REQUIRED	
+	desp CDATA #IMPLIED
+>
+<!ATTLIST select>
+<!ATTLIST from
+	t CDATA #REQUIRED	
+	f CDATA #IMPLIED
+	as  CDATA #IMPLIED
+	sub (true | false) "false"
+>
+<!ATTLIST join
+	t CDATA #REQUIRED	
+	f CDATA #REQUIRED	
+	ot CDATA #REQUIRED	
+	of CDATA #REQUIRED	
+	type (left | right | none) "none"
+>
+<!ATTLIST where>
+<!ATTLIST group
+	t CDATA #REQUIRED	
+	f CDATA #REQUIRED	
+	exp CDATA #IMPLIED
+>
+<!ATTLIST order
+	t CDATA #REQUIRED	
+	f CDATA #REQUIRED	
+	exp CDATA #IMPLIED
+>
+<!ATTLIST having>
+<!ATTLIST def
+	as CDATA #REQUIRED
+>

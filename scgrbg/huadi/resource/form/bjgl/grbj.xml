@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Forms SYSTEM "../form_definition.dtd">
+<Forms>
+	<form id="grbj" implement="loginvalidate_interface" desp="首页" >
+	<css>
+			.none-table tbody tr td {
+			TEXT-ALIGN: center!important;
+			}
+			.none-table {
+			TEXT-ALIGN: center!important;
+			}
+			.txtA{
+			font-size:28px!important;
+			}
+			.txtB{
+			font-size:20px!important;
+			}
+			.txtC{
+			font-size:16px!important;
+			font-weight:bold!important;
+		    line-height:30px!important;
+		    height:30px!important;
+			}
+			.txtD{
+			font-size:16px!important;
+			font-weight:bold!important;
+		    line-height:100px!important;
+		    height:100px!important;
+			}
+		</css>
+	
+		<import language="css" file="pt/res/css/newcss.css"></import>
+		<import language="javascript" file="pt/res/hdoa/js/render.js"></import>
+		
+		<widgets>
+			<!-- <layout type="BandLayout"   >
+				<layout type="TabLayout" name="grbj_show" width="100%"
+					topSpace="5px">
+					<layout type="BandLayout" name="tab0" desp="个人待办" topSpace="0px"
+						width="100%" attr="groupSize:1;" height="200px" >
+						<basic name="frame0" widget="Frame" width="100%" ></basic>
+					</layout>
+					<layout type="BandLayout" name="tab1" desp="个人待阅"
+						topSpace="5px" width="100%" attr="groupSize:1;" height="200px" >
+						<basic name="frame1" widget="Frame" width="100%" >
+						</basic>
+					</layout>
+			    </layout>	
+				<layout type="TabLayout" name="bmbj_show" width="100%"
+					topSpace="5px">
+					<layout type="BandLayout" name="tab2" desp="部门待办" topSpace="0px"
+						width="100%" attr="groupSize:1;" height="200px" >
+						<basic name="frame2" widget="Frame" width="100%" ></basic>
+					</layout>
+					<layout type="BandLayout" name="tab3" desp="部门待阅"
+						topSpace="0px" width="100%" attr="groupSize:1;" height="200px" >
+						<basic name="frame3" widget="Frame" width="100%" >
+						</basic>
+					</layout>
+			</layout>	
+		</layout> -->
+		
+		
+		<layout type="BandLayout"   >
+			 
+				<layout type="TableLayout" width="100%" class="in-table" 
+					attr="groupSize:3;cellspacing:0;cellpadding:0;align:center;" >
+					
+
+
+					<!-- <basic name="subsystem" label="业务系统:" width="200px" widget="Edit" leftSpace="-20px" labelWidth="120px"/> -->
+					<basic name="title" label="标题:" width="200px" widget="Edit" leftSpace="-20px" labelWidth="120px"/>
+				
+					<basic name="search" label="查询" class="gradual-btnitem" width="50px"
+						height="25px"  widget="OButton" leftSpace="50px"  />
+				</layout> 
+		
+				<layout type="TableLayout" width="100%"  >
+						
+					<basic name="list0" width="100%" height="215px" widget="XListGrid" 
+						attr="seq:true;rh:35px;border:true;idField:list_id;page:true;pageaction:page;autoColumnWidth:true;refreshBtnShow:false;" >
+
+						<!-- <col label="标题" id="jdxx_id" width="150px" align="center" ></col> -->
+						<col label="标题" id="title" width="150px" align="center" ></col>
+						<col label="密级" id="security" width="150px" align="center" renderer="StRender"></col> 
+						<col label="发送人" id="sender" width="150px" align="center" ></col> 
+						<col label="发送时间" id="send_time" width="250px" align="center" ></col>
+						<col label="业务系统" id="subsystem" width="200px" align="center" ></col>
+						<col label="待办消息" id="message" width="250px" align="center" ></col>
+						<col label="打开方式" id="open_type" width="250px" align="center" ishide="true" />
+						<col label="链接" id="open_url" width="250px" align="center" ishide="true" />
+						<col label="发送人单位" id="send_unit" width="250px" align="center" ishide="true" ></col>
+					</basic>
+				</layout>
+				 <layout type="TableLayout" width="100%" class="in-table" 
+					attr="groupSize:3;cellspacing:0;cellpadding:0;align:center;" >
+					
+
+
+					<!-- <basic name="subsystem" label="业务系统:" width="200px" widget="Edit" leftSpace="-20px" labelWidth="120px"/> -->
+					<basic name="title" label="标题:" width="200px" widget="Edit" leftSpace="-20px" labelWidth="120px"/>
+				
+					<basic name="search" label="查询" class="gradual-btnitem" width="50px"
+						height="25px"  widget="OButton" leftSpace="50px"  />
+				</layout> 
+		
+				<layout type="TableLayout" width="100%" class="tabcontent" >
+						
+					<basic name="list1" width="100%" height="215px" widget="XListGrid" 
+						attr="seq:true;rh:35px;border:true;idField:list_id;page:true;pageaction:page;autoColumnWidth:true;refreshBtnShow:false;" >
+
+						<!-- <col label="标题" id="jdxx_id" width="150px" align="center" ></col> -->
+						<col label="标题" id="title" width="150px" align="center" ></col>
+						<col label="密级" id="security" width="150px" align="center" renderer="StRender" ></col> 
+						<col label="发送人" id="sender" width="150px" align="center" ></col> 
+						<col label="发送时间" id="send_time" width="250px" align="center" ></col>
+						<col label="业务系统" id="subsystem" width="200px" align="center" ></col>
+						<col label="待办消息" id="message" width="250px" align="center" ></col>
+						<col label="打开方式" id="open_type" width="250px" align="center" ishide="true" />
+						<col label="链接" id="open_url" width="250px" align="center" ishide="true" />
+						<col label="发送人单位" id="send_unit" width="250px" align="center" ishide="true" ></col>
+					</basic>
+				</layout>
+			</layout>
+		</widgets>
+		<extendPoint>
+			<plugin type="cn.com.huadi.aos.hdoa.bjgl.plugin.GrdbPlugin"  createEvent="null" onEvent="query;page;sel;verify;getServer" ></plugin>		
+			<plugin type="cn.com.huadi.aos.hdoa.bjgl.plugin.BmdbPlugin"  createEvent="null" onEvent="query;page;sel;verify;getServer" ></plugin>		
+		</extendPoint>
+		<bind element="this" event="onCreate">
+			<![CDATA[
+				w('frame0').showForm('grbj_db',null,null);
+				
+			]]>
+		</bind>
+		<!-- 点击查询触发事件  -->	
+		<!-- <bind element="grbj_show" event="dochange" param="m"><![CDATA[
+		
+			var obj = w('grbj_show').getData();
+			var code = obj.code;
+			var height=w('tab0').style.height;
+			
+			
+			if(code == 'tab0'){
+				w('frame0').height=height;
+				w('frame0').showForm('grbj_db',null,null);
+			}else if(code == 'tab1'){
+				w('frame1').height=height;
+				
+				w('frame1').showForm('grbj_db',null,null);
+			}
+			
+		]]></bind> -->
+		<!-- <bind element="bmbj_show" event="dochange" param="m"><![CDATA[
+		
+			var obj = w('bmbj_show').getData();
+			var code = obj.code;
+			var height=w('tab0').style.height;
+			
+			if(code == 'tab2'){
+				alert("tab0");
+				w('frame2').height=height;
+				w('frame2').showForm('bmbj_db',null,null);
+			}else if(code == 'tab03'){
+				w('frame3').height=height;
+				w('frame3').showForm('bmyj_dy',null,null);
+			}
+			
+		]]></bind> -->
+		<!-- 这里表1的点击事件 -->
+		<bind element="list0" event="dodblclick"  param="r,c,g"><![CDATA[
+			var tabs = parent.parent.tabs;
+			var open_type=r.open_type;
+			
+			var open_url=r.open_url;
+			
+			var list_id=r.list_id;
+						
+			var server=PT.ns('getServer',null,null);
+			
+			if(open_type=='页签'){
+				
+				var obj=open_url.split("&");
+				var label="";	
+				var url_short="";			
+				for(var i=0;i<obj.length;i++){
+				
+					if(obj[i].startWith("label")){
+					
+						var labelName=obj[i].split("=");
+						label=labelName[1];
+						
+					}else{
+						if(i==obj.length-1){
+							url_short+=obj[i];
+						}else{
+							var aa=obj[i]+"&";
+							url_short+=aa;						
+						}
+					}
+					
+				}
+				
+				var res=PT.ns('verify',null,'list_id='+list_id);	
+				var tab = tabs.getTabByUrl(server+url_short);
+				 if(tab != null){
+		                      tab.load(server+url_short);
+		                      tab.activate();
+	                     }else{
+		                      tabs.add({
+			                  url:server+url_short,
+			                  label:label
+		                 })
+		                 }
+			
+				
+			}else if(open_type=='新窗口'){
+				var res=PT.ns('verify',null,'list_id='+list_id);
+				window.open(server+open_url);
+				
+			}else if(open_type=='页面跳转'){
+				
+				var res=PT.ns('verify',null,'list_id='+list_id);				
+				parent.location.href=server+open_url;
+								
+			}else if(open_type==null){
+				PT.alert('没有数据');
+			}		
+		]]></bind>
+	    <!-- 这是表2的点击事件 -->
+		<bind element="list1" event="dodblclick"  param="r,c,g"><![CDATA[
+			var tabs = parent.parent.tabs;
+			var open_type=r.open_type;
+			
+			var open_url=r.open_url;
+			
+			var list_id=r.list_id;
+						
+			var server=PT.ns('getServer',null,null);
+			
+			if(open_type=='页签'){
+				var obj=open_url.split("&");
+				var label="";	
+				var url_short="";			
+				for(var i=0;i<obj.length;i++){
+				
+					if(obj[i].startWith("label")){
+					
+						var labelName=obj[i].split("=");
+						label=labelName[1];
+						
+					}else{
+						if(i==obj.length-1){
+							url_short+=obj[i];
+						}else{
+							var aa=obj[i]+"&";
+							url_short+=aa;						
+						}
+					}
+					
+				}
+				
+				var res=PT.ns('verify',null,'list_id='+list_id);	
+				var tab = tabs.getTabByUrl(server+url_short);
+				 if(tab != null){
+		                      tab.load(server+url_short);
+		                      tab.activate();
+	                     }else{
+		                      tabs.add({
+			                  url:server+url_short,
+			                  label:label
+		                 })
+		                 }
+							
+			}else if(open_type=='新窗口'){
+				
+				var res=PT.ns('verify',null,'list_id='+list_id);
+				window.open(server+open_url);
+				
+			}else if(open_type=='页面跳转'){
+							
+				var res=PT.ns('verify',null,'list_id='+list_id);				
+				parent.location.href=server+open_url;
+								
+			}else if(open_type==null){
+				PT.alert('没有数据');
+			}		
+		]]></bind>
+	</form>	
+</Forms>

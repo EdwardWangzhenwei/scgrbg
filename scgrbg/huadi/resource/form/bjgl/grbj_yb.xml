@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Forms SYSTEM "../form_definition.dtd">
+<Forms>
+	<form id="grbj_yb" implement="loginvalidate_interface" desp="首页" >
+	<css>
+		.status0{
+			position:relative;
+			display: inline-block; 
+			background:url('img/status/ztt.png');
+			background-size:400% 400%;
+			background-position:0px 0px;
+		}
+		.status1{
+			position:relative;
+			display: inline-block;
+			background:url('img/status/ztt.png');
+			background-size:400% 400%;
+			background-position:-1px -20px;
+		}
+		.status2{
+			position:relative;
+			display: inline-block;
+			background:url('img/status/ztt.png');
+			background-size:410% 410%;
+			background-position:-21px -21px;
+		}
+	</css>
+		<import language="css" file="pt/res/css/newcss.css"></import>
+		<import language="javascript" file="pt/res/hdoa/js/render.js"></import>
+		<widgets>
+			<layout type="TableLayout" attr="groupSize:1" width="100%" desp="个人待办信息" height="500px" scrolly="true">								
+				 <layout type="TableLayout" width="100%" class="in-table" 
+					attr="groupSize:3;cellspacing:0;cellpadding:0;align:center;" >
+					
+					<basic name="subsystem" label="业务系统:" width="200px" widget="Edit" leftSpace="-20px" labelWidth="120px"/>
+					<basic name="title" label="标题:" width="200px" widget="Edit" leftSpace="-20px" labelWidth="120px"/>
+				
+					<basic name="search" label="查询" class="gradual-btnitem" width="50px"
+						height="25px"  widget="OButton" leftSpace="50px"  />
+				</layout> 
+		
+				<layout type="TableLayout" width="100%" class="tabcontent" >
+						
+					<basic name="list0" width="100%" height="420px" widget="XListGrid" 
+						attr="seq:true;rh:36px;border:true;idField:list_id;page:true;pageaction:page;autoColumnWidth:true;refreshBtnShow:false;" >
+
+						<!-- <col label="标题" id="jdxx_id" width="150px" align="center" ></col> -->
+						<col label="标题" id="title" width="150px" align="center" ></col>
+						<col label="密级" id="security" width="150px" align="center" renderer="StRender" ></col> 
+						<col label="发送人" id="sender" width="150px" align="center" ></col> 
+						<col label="发送时间" id="send_time" width="250px" align="center" ></col>
+						<col label="业务系统" id="subsystem" width="250px" align="center" ></col>
+						<col label="待办消息" id="message" width="250px" align="center" ></col>
+						<col label="完成时间" id="finish_time" width="250px" align="center" ></col>
+						<col label="打开方式" id="open_type" width="250px" align="center" ishide="true" />
+						<col label="链接" id="open_url" width="250px" align="center" ishide="true" />
+						<!-- <col label="增加人单位" id="zjrdw" width="250px" align="center"  ></col> -->
+					</basic>
+				</layout>
+			</layout>		
+		</widgets>
+		<extendPoint>
+			<plugin type="cn.com.huadi.aos.hdoa.bjgl.plugin.GrybPlugin"  createEvent="null" onEvent="query;page;sel;getServer" ></plugin>		
+		</extendPoint>
+		<bind element="this" event="onCreate">
+			<![CDATA[
+				String.prototype.startWith = function(compareStr){
+				return this.indexOf(compareStr) == 0;
+				}
+			]]>
+		</bind>
+		<!-- 点击查询触发事件  -->	
+		<bind element="search" event="click">
+			<![CDATA[
+				PT.s('query',null,null);
+			]]>
+		</bind>
+		<!-- 双击打开URL进而打开页面 -->
+		<bind element="list0" event="dodblclick"  param="r,c,g"><![CDATA[
+			var open_type=r.open_type;
+			var open_url=r.open_url;
+			var list_id=r.list_id;
+			var tabs = parent.parent.tabs;
+			
+			var server=PT.ns('getServer',null,null);
+			/*判断open_type的类型确定相应的打开方式:页签，新窗口，页面跳转*/
+			if(open_type=='页签'){
+				/*var tabs = parent.tabs;
+				tabs.add({
+						url:'../../../canvas?formid='+open_url+'&flag=complete'
+						})*/
+				/*从open_url里获取label作为页签名*/
+				var obj=open_url.split("&");
+				var label="";	
+				var url_short="";				
+				for(var i=0;i<obj.length;i++){
+				
+					if(obj[i].startWith("label")){
+					
+						var labelName=obj[i].split("=");
+						label=labelName[1];
+						
+					}else{
+						if(i==obj.length-1){
+							url_short+=obj[i];
+						}else{
+							var aa=obj[i]+"&";
+							url_short+=aa;						
+						}
+					}
+					
+				}
+				/*从已办中进入，不需要update数据，URL上flag=complete用户不具有操作权限*/	
+				var tab = tabs.getTabByUrl(server+url_short);
+				
+				 if(tab != null){
+		                      tab.load(server+url_short);
+		                      tab.activate();
+	                     }else{
+		                      tabs.add({
+			                  url:server+url_short,
+			                  label:label
+		                 })
+		                 }
+				/*url:'../../../canvas?formid=jddj_detail&jdxx_id='+jdxx_id+'&fromurl='+tabs.getCurrentTab().url*/
+			}else if(open_type=='新窗口'){
+				/*PT.showModalForm('+open_url+','flag=complete',null,null,null);*/
+				/*从已办中进入，不需要update数据，URL上flag=complete用户不具有操作权限*/	
+				
+				/*PT.showModalForm('select_user_nolimit',"flag=2&deptid="+fsfwId+"&user_secret="+mj,'730','600',null);*/
+				window.open(server+open_url);
+			}else if(open_type=='页面跳转'){
+				/*PT.showForm('+open_url+','flag=complete',null);*/
+				/*从已办中进入，不需要update数据，URL上flag=complete用户不具有操作权限*/	
+				
+				/*PT.showForm(formid,paramString,action)*/
+				parent.location.href=server+open_url;
+			}
+			
+		
+		
+			
+		]]></bind> 
+	</form>	
+</Forms>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Forms SYSTEM "../form_definition.dtd">
+<Forms>
+	<form id="login" desp="四川省委接待管理系统">
+	<css>
+	.loginbc{ margin: 0 auto;}
+	.loginps{ margin: 0 auto;}
+	.loginbg{  background-repeat: no-repeat;}
+	.loginbox{ border:1px solid #b3b3b3; background-color: white; padding:40px 0; -webkit-box-shadow: #666 0px 0px 10px;
+    -moz-box-shadow: #666 0px 0px 10px;
+    box-shadow: #666 0px 0px 10px; }
+    .reset{background: url("img/loginbtntwo_ah.png") no-repeat  0px -0px ;border:none!important;margin:10px 0!important!}
+    .submit{background: url("img/loginbtn.png") no-repeat  0px 0px ;border:none!important;margin:10px 0!important!}
+    .resetMouseover{ background: url("img/loginbtntwo_ah.png") no-repeat -0px -34px;border:none!important;margin:10px 0!important!}
+    .submitMouseover{background: url("img/loginbtn.png") no-repeat -0px -34px;border:none!important;margin:10px 0!important!}
+    .resetMousedown {
+	   background: url("img/loginbtntwo_ah.png") no-repeat -0px -34px;border:none!important;margin:10px 0!important!
+     }
+     .submitMousedown {
+	   background: url("img/loginbtn.png") no-repeat -0px -34px;border:none!important;margin:10px 0!important!
+     }
+	 </css>
+		<widgets>
+			<layout name="halign" type="BandLayout" width="100%" height="100%"
+				align="center" class="loginbc" >
+				<layout class="loginps" name="valign" type="TableLayout" width="100%"
+					height="100%" attr="valign:middle;">
+					<layout class="loginbg" name="bkground" type="TableLayout" backgroundImg="img/loginbg_ah.jpg" attr="valign:bottom;">
+						<layout name="position"  align="center" type="TableLayout"
+							width="300px" height="760px" attr="groupSize:1;valign:middle;"
+							leftSpace="850px">
+							<layout name="content" class="loginbox" type="TableLayout" attr="groupSize:1;cellspacing:10">
+								<basic name="username" label="用户账号：" widget="Edit"  width="140px"></basic>
+								<basic name="userpwd" label="密码：" widget="Password"  width="140px" />
+								 <layout type="BandLayout" name="buttonBandLayout3" attr="align:center;"
+									width="100%" desp="操作按钮列表" topSpace="15px" >
+									<basic name="ok"  width="110px" leftSpace="15px" widget="OButton"
+										height="34px" attr="buttonClass:submit;"  backgroundImg="img/loginbtn_ah.png"  />
+									<basic name="userOK"  width="110px" widget="OButton"
+										height="34px"  attr="buttonClass:reset;" backgroundImg="img/loginbtntwo_ah.png"/>
+								  </layout>
+								
+								<!--<basic name="ok" leftSpace="90px" height="35px" width="110px"
+									widget="OButton"  attr="buttonClass:submit;" backgroundImg="img/loginbtn.png" />
+									<basic name="ok" leftSpace="90px" height="35px" width="110px"
+									widget="OButton" attr="buttonClass:picbutton;" backgroundImg="img/loginbtntwo.png" />
+									  -->
+							</layout>
+						</layout>
+					</layout>
+				</layout>
+			</layout>
+
+		</widgets>
+		<extendPoint>
+			<plugin type="cn.com.huadi.aos.hdoa.login.plugin.LoginPlugin"
+				submitEvent="login"></plugin>
+		</extendPoint>
+		<bind element="ok" event="click"><![CDATA[
+			if(wg('username') == '' || wg('username') == null )
+			{
+				PT.alert('登录名不能为空,请重新输入！'); 
+				return;
+			}
+			if(wg('userpwd') == '' || wg('userpwd') == null )
+			{
+				PT.alert('密码不能为空,请重新输入！'); 
+				return;
+			}
+		    var res = PT.s('login',null,null);
+		    if(res=='ok'){
+		      window.location.href="pt/res/hdoa/index_new.jsp";
+		    }
+		    
+		   else{
+		      PT.alert(res);
+		    }			
+		]]></bind>
+	</form>
+</Forms>
+		

@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE Forms SYSTEM "../form_definition.dtd"><Forms>	<form id="loginvalidate_interface" desp="是否登录判断">   <import language="javascript" file="pt/res/js/sessionout.js"></import>	<widgets></widgets>			</form></Forms>				

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqls SYSTEM "sql_definition.dtd">
+<sqls>
+	<sql group="node">
+		<i id="fenfaupdate">
+			update GZL_NODE set N_FACT_EXECUTOR =? ,N_STATUS = 2
+			,N_FINISH_DATE = sysdate where fi_objectid =? and n_status = 0 and n_executor=?
+		</i>
+		<i id="shouhuiupdate">
+			update gzl_node set n_status =3,n_finish_date=sysdate where  n_id = ?
+		</i>
+		<i id="fenfaqzshnode">
+			update GZL_NODE set N_STATUS = 2 where N_ID !=? and
+			FI_OBJECTID = ? and n_status = 0
+		</i>
+		<!-- 查询待办 -->
+		<i id="queryDaiBan">
+		<![CDATA[
+	     SELECT f.bt,
+         f.jjcd,
+         F.ZH,
+         F.NH,
+         f.xh,
+         f.hz,
+         f.wjbm,
+         F.WHXSGZ,
+         c.n_id,
+         c.n_uperid,
+         c.n_status,
+         c.fi_id,
+         c.n_executor,
+         c.n_fact_executor,
+         c.n_fr_id,
+         c.n_fr_name,
+         c.n_sender,
+         c.n_send_unit,
+         to_char(c.n_send_date,'yyyy-mm-dd HH24:mi:ss') as n_send_date, 
+         c.N_DBYXJ,
+         c.n_ydbz,
+         f.wjlx,
+         c.N_LYS,
+         f.llr_id
+         FROM gw_fzxx f,gw_wjxs w,
+         (SELECT *
+            FROM gzl_node n
+           WHERE 1 = 1 AND n_status = 0 AND n.n_executor = {user_id}) c
+          WHERE     f.wjbm = c.fi_objectid and f.wjxs_id=w.wjxs_id
+          AND (mj <= {user_secret} or mj is null)
+          AND (f.zt != '-1' OR f.zt IS NULL)
+          #querysql
+          ORDER BY N_DBYXJ ASC, n_send_date DESC
+          ]]>
+		</i>
+			<!-- 查询待办 -->
+		<i id="queryYiBan">
+		<![CDATA[
+	    select d.* from (select wjbm,max(n_id) as n_id from( SELECT  
+         c.n_id,f.wjbm
+         FROM gw_fzxx f,
+         (SELECT *
+            FROM gzl_node n
+           WHERE 1 = 1 AND ( n_status =2 or n_status=9) AND n.n_executor = #user_id) c
+          WHERE     f.wjbm = c.fi_objectid
+          AND (mj <= '#user_secret' or mj is null)
+          AND (f.zt != '-1' OR f.zt IS NULL) and f.isygd!=1
+          ORDER BY  n_send_date DESC ) a group by wjbm) b,( SELECT  f.bt,
+         f.jjcd,
+         f.wjbm,
+         F.ZH,
+         F.NH,
+         f.xh,
+         f.hz,
+         F.WHXSGZ,
+          f.lrbm,
+          f.lrbm_id,
+         f.llr,
+         f.isygd,
+         c.n_id,
+         c.n_uperid,
+         c.n_status,
+         c.fi_id,
+         c.n_executor,
+         c.n_fact_executor,
+         c.n_fr_id,
+         c.n_fr_name,
+         c.n_sender,
+         c.n_send_unit,
+         to_char(c.n_send_date,'yyyy-mm-dd HH24:mi:ss') as n_send_date, 
+         c.N_DBYXJ,
+         c.n_ydbz,
+         f.wjlx,
+         w.boc_id,
+         c.N_LYS
+         FROM gw_fzxx f,gw_wjxs w,
+         (SELECT *
+            FROM gzl_node n
+           WHERE 1 = 1 AND ( n_status =2 or n_status=9) AND n.n_executor = #user_id) c
+          WHERE     f.wjbm = c.fi_objectid and f.wjxs_id=w.wjxs_id 
+          AND (mj <= '#user_secret' or mj is null)
+          AND (f.zt != '-1' OR f.zt IS NULL)
+          ORDER BY  n_send_date DESC ) d  where  d.n_id = b.n_id   #querysql 
+          order by d.n_send_date desc
+          ]]>
+		</i>
+	</sql>
+	<sql group="shouhui">
+		<i id="updateLDPS">
+		   update gw_ldps set gzlid=? where gzlid = ?
+		</i>
+		<i id="updateGWJH">
+			<![CDATA[
+		     update gw_gwjh set zt='5' where wjbm = ? and  zt<>'2' and zt<>'3'  
+		     ]]>
+		</i>
+		<i id="updateSW">
+			<![CDATA[
+		        update  gw_fzxx set bt='已被收回_'||bt  where wjbm=?
+		     ]]>
+		</i>
+	</sql>
+	<!--  <sql group="flowrole">
+		<i id="queryFlowRole">
+			SELECT a.fr_name as code, a.fr_name as name
+			FROM gzl_flowrole a, GZL_BUSINESS_OBJECT_CLASS b
+			WHERE b.boc_name like ?
+			AND b.boc_id = a.boc_id
+			AND a.SSDWID = b.ssdwid
+			AND b.ssdwid = ?
+			ORDER BY a.fr_order
+		</i>
+	</sql>-->
+	<sql group="flowrole">
+		<i id="queryFlowRole">
+			SELECT
+			    DISTINCT a . boc_id ,b.boc_id as code,b.boc_name as name
+			FROM 
+			    gw_wjxs a ,
+			    gzl_business_object_class b 
+			WHERE 
+			    a . wjlx = ? 
+			    AND a . ssdwid = ?
+			    AND a . boc_id = b . boc_id 
+			ORDER BY 
+			    a . boc_id
+		</i>
+		<i id="queryFlowRole1">
+			SELECT
+				c.fr_name as code , c.fr_name as name
+			FROM 
+			    gzl_business_object_class b,
+			    gzl_flowrole c
+			WHERE 
+				b.boc_id=?
+				and  b.ssdwid=?
+			    ANd b.ssdwid=c.ssdwid
+			    AND b.boc_id=c.boc_id
+			ORDER BY  c.fr_name
+
+		</i>		
+	</sql>
+</sqls>

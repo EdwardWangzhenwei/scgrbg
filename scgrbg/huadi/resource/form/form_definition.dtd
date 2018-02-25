@@ -1,0 +1,1000 @@
+
+
+<!--================== Imported Names ====================================-->
+
+<!ENTITY % ContentType "CDATA">
+    <!-- media type, as per [RFC2045] -->
+
+<!ENTITY % ContentTypes "CDATA">
+    <!-- comma-separated list of media types, as per [RFC2045] -->
+
+<!ENTITY % Charset "CDATA">
+    <!-- a character encoding, as per [RFC2045] -->
+
+<!ENTITY % Charsets "CDATA">
+    <!-- a space separated list of character encodings, as per [RFC2045] -->
+
+<!ENTITY % LanguageCode "NMTOKEN">
+    <!-- a language code, as per [RFC3066] -->
+
+<!ENTITY % Character "CDATA">
+    <!-- a single character, as per section 2.2 of [XML] -->
+
+<!ENTITY % Number "CDATA">
+    <!-- one or more digits -->
+
+<!ENTITY % LinkTypes "CDATA">
+    <!-- space-separated list of link types -->
+
+<!ENTITY % MediaDesc "CDATA">
+    <!-- single or comma-separated list of media descriptors -->
+
+<!ENTITY % URI "CDATA">
+    <!-- a Uniform Resource Identifier, see [RFC2396] -->
+
+<!ENTITY % UriList "CDATA">
+    <!-- a space separated list of Uniform Resource Identifiers -->
+
+<!ENTITY % Datetime "CDATA">
+    <!-- date and time information. ISO date format -->
+
+<!ENTITY % Script "CDATA">
+    <!-- script expression -->
+
+<!ENTITY % StyleSheet "CDATA">
+    <!-- style sheet data -->
+
+<!ENTITY % Text "CDATA">
+    <!-- used for titles etc. -->
+
+<!ENTITY % Length "CDATA">
+    <!-- nn for pixels or nn% for percentage length -->
+
+<!ENTITY % MultiLength "CDATA">
+    <!-- pixel, percentage, or relative -->
+
+<!ENTITY % Pixels "CDATA">
+    <!-- integer representing length in pixels -->
+
+<!-- these are used for image maps -->
+
+<!ENTITY % Shape "(rect|circle|poly|default)">
+
+<!ENTITY % Coords "CDATA">
+    <!-- comma separated list of lengths -->
+
+<!--=================== Generic Attributes ===============================-->
+
+<!-- core attributes common to most elements
+  id       document-wide unique id
+  class    space separated list of classes
+  style    associated style info
+  title    advisory title/amplification
+-->
+<!ENTITY % coreattrs
+ "id          ID             #IMPLIED
+  class       CDATA          #IMPLIED
+  style       %StyleSheet;   #IMPLIED
+  title       %Text;         #IMPLIED"
+  >
+
+<!-- internationalization attributes
+  lang        language code (backwards compatible)
+  xml:lang    language code (as per XML 1.0 spec)
+  dir         direction for weak/neutral text
+-->
+<!ENTITY % i18n
+ "lang        %LanguageCode; #IMPLIED
+  xml:lang    %LanguageCode; #IMPLIED
+  dir         (ltr|rtl)      #IMPLIED"
+  >
+
+<!-- attributes for common UI events
+  onclick     a pointer button was clicked
+  ondblclick  a pointer button was double clicked
+  onmousedown a pointer button was pressed down
+  onmouseup   a pointer button was released
+  onmousemove a pointer was moved onto the element
+  onmouseout  a pointer was moved away from the element
+  onkeypress  a key was pressed and released
+  onkeydown   a key was pressed down
+  onkeyup     a key was released
+-->
+<!ENTITY % events
+ "onclick     %Script;       #IMPLIED
+  ondblclick  %Script;       #IMPLIED
+  onmousedown %Script;       #IMPLIED
+  onmouseup   %Script;       #IMPLIED
+  onmouseover %Script;       #IMPLIED
+  onmousemove %Script;       #IMPLIED
+  onmouseout  %Script;       #IMPLIED
+  onkeypress  %Script;       #IMPLIED
+  onkeydown   %Script;       #IMPLIED
+  onkeyup     %Script;       #IMPLIED"
+  >
+
+<!-- attributes for elements that can get the focus
+  accesskey   accessibility key character
+  tabindex    position in tabbing order
+  onfocus     the element got the focus
+  onblur      the element lost the focus
+-->
+<!ENTITY % focus
+ "accesskey   %Character;    #IMPLIED
+  tabindex    %Number;       #IMPLIED
+  onfocus     %Script;       #IMPLIED
+  onblur      %Script;       #IMPLIED"
+  >
+
+<!ENTITY % attrs "%coreattrs; %i18n; %events;">
+
+<!--=================== Text Elements ====================================-->
+
+<!ENTITY % special.pre
+   "br | span | map">
+
+
+<!ENTITY % special
+   "%special.pre; | object | img ">
+
+<!ENTITY % fontstyle "tt | i | b | big | small ">
+
+<!ENTITY % phrase "em | strong | q |
+                   sub | sup ">
+
+<!ENTITY % inline.forms "input | select | textarea | label | button | basic">
+
+<!-- these can occur at block or inline level -->
+<!ENTITY % misc.inline "ins | del | script">
+
+<!-- these can only occur at block level -->
+<!ENTITY % misc "noscript | %misc.inline;">
+
+<!ENTITY % inline "a | %special; | %fontstyle; | %phrase; | %inline.forms;  ">
+
+<!-- %Inline; covers inline or "text-level" elements -->
+<!ENTITY % Inline "(#PCDATA | %inline; | %misc.inline; )*">
+
+<!--================== Block level elements ==============================-->
+
+<!ENTITY % heading "h1|h2|h3|h4|h5|h6">
+<!ENTITY % lists "ul | ol | dl">
+<!ENTITY % blocktext "pre | hr | blockquote | address">
+
+<!ENTITY % block
+     "p | %heading; | div | %lists; | %blocktext; | fieldset | table | layout">
+
+<!ENTITY % Block "(%block; | %misc;)*">
+
+<!-- %Flow; mixes block and inline and is used for list items etc. -->
+<!ENTITY % Flow "(#PCDATA | %block; | %inline; | %misc;)*">
+
+<!--================== Content models for exclusions =====================-->
+
+<!-- a elements use %Inline; excluding a -->
+
+<!ENTITY % a.content
+   "(#PCDATA | %special; | %fontstyle; | %phrase; | %inline.forms; | %misc.inline;)*">
+
+<!-- pre uses %Inline excluding big, small, sup or sup -->
+
+<!ENTITY % pre.content
+   "(#PCDATA | a | %fontstyle; | %phrase; | %special.pre; | %misc.inline;
+      | %inline.forms;)*">
+
+<!-- form uses %Block; excluding form -->
+
+<!ENTITY % form.content "(%block; | %misc;)*">
+
+<!-- button uses %Flow; but excludes a, form and form controls -->
+
+<!ENTITY % button.content
+   "(#PCDATA | p | %heading; | div | %lists; | %blocktext; |
+    table | %special; | %fontstyle; | %phrase; | %misc;)*">
+
+<!--================ Document Structure ==================================-->
+
+<!-- the namespace URI designates the document profile -->
+
+
+<!--================ Document Head =======================================-->
+
+
+<!--=================== Document Body ====================================-->
+
+
+<!ELEMENT div %Flow;>  <!-- generic language/style container -->
+<!ATTLIST div
+  %attrs;
+  >
+
+<!--=================== Paragraphs =======================================-->
+
+<!ELEMENT p %Inline;>
+<!ATTLIST p
+  %attrs;
+  >
+
+<!--=================== Headings =========================================-->
+
+<!--
+  There are six levels of headings from h1 (the most important)
+  to h6 (the least important).
+-->
+
+<!ELEMENT h1  %Inline;>
+<!ATTLIST h1
+   %attrs;
+   >
+
+<!ELEMENT h2 %Inline;>
+<!ATTLIST h2
+   %attrs;
+   >
+
+<!ELEMENT h3 %Inline;>
+<!ATTLIST h3
+   %attrs;
+   >
+
+<!ELEMENT h4 %Inline;>
+<!ATTLIST h4
+   %attrs;
+   >
+
+<!ELEMENT h5 %Inline;>
+<!ATTLIST h5
+   %attrs;
+   >
+
+<!ELEMENT h6 %Inline;>
+<!ATTLIST h6
+   %attrs;
+   >
+
+<!--=================== Lists ============================================-->
+
+<!-- Unordered list -->
+
+<!ELEMENT ul (li)+>
+<!ATTLIST ul
+  %attrs;
+  >
+
+<!-- Ordered (numbered) list -->
+
+<!ELEMENT ol (li)+>
+<!ATTLIST ol
+  %attrs;
+  >
+
+<!-- list item -->
+
+<!ELEMENT li %Flow;>
+<!ATTLIST li
+  %attrs;
+  >
+
+<!-- definition lists - dt for term, dd for its definition -->
+
+<!ELEMENT dl (dt|dd)+>
+<!ATTLIST dl
+  %attrs;
+  >
+
+<!ELEMENT dt %Inline;>
+<!ATTLIST dt
+  %attrs;
+  >
+
+<!ELEMENT dd %Flow;>
+<!ATTLIST dd
+  %attrs;
+  >
+
+<!--=================== Address ==========================================-->
+
+<!-- information on author -->
+
+<!ELEMENT address %Inline;>
+<!ATTLIST address
+  %attrs;
+  >
+
+<!--=================== Horizontal Rule ==================================-->
+
+<!ELEMENT hr EMPTY>
+<!ATTLIST hr
+  %attrs;
+  >
+
+<!--=================== Preformatted Text ================================-->
+
+<!-- content is %Inline; excluding "img|object|big|small|sub|sup" -->
+
+<!ELEMENT pre %pre.content;>
+<!ATTLIST pre
+  %attrs;
+  xml:space (preserve) #FIXED 'preserve'
+  >
+
+<!--=================== Block-like Quotes ================================-->
+
+<!ELEMENT blockquote %Block;>
+<!ATTLIST blockquote
+  %attrs;
+  cite        %URI;          #IMPLIED
+  >
+
+<!--=================== Inserted/Deleted Text ============================-->
+
+<!--
+  ins/del are allowed in block and inline content, but its
+  inappropriate to include block content within an ins element
+  occurring in inline content.
+-->
+<!ELEMENT ins %Flow;>
+<!ATTLIST ins
+  %attrs;
+  cite        %URI;          #IMPLIED
+  datetime    %Datetime;     #IMPLIED
+  >
+
+<!ELEMENT del %Flow;>
+<!ATTLIST del
+  %attrs;
+  cite        %URI;          #IMPLIED
+  datetime    %Datetime;     #IMPLIED
+  >
+
+<!--================== The Anchor Element ================================-->
+
+<!-- content is %Inline; except that anchors shouldn't be nested -->
+
+<!ELEMENT a %a.content;>
+<!ATTLIST a
+  %attrs;
+  %focus;
+  charset     %Charset;      #IMPLIED
+  type        %ContentType;  #IMPLIED
+  name        NMTOKEN        #IMPLIED
+  href        %URI;          #IMPLIED
+  hreflang    %LanguageCode; #IMPLIED
+  rel         %LinkTypes;    #IMPLIED
+  rev         %LinkTypes;    #IMPLIED
+  shape       %Shape;        "rect"
+  coords      %Coords;       #IMPLIED
+  >
+
+<!--===================== Inline Elements ================================-->
+
+<!ELEMENT span %Inline;> <!-- generic language/style container -->
+<!ATTLIST span
+  %attrs;
+  >
+
+
+
+<!ELEMENT br EMPTY>   <!-- forced line break -->
+<!ATTLIST br
+  %coreattrs;
+  >
+
+<!ELEMENT em %Inline;>   <!-- emphasis -->
+<!ATTLIST em %attrs;>
+
+<!ELEMENT strong %Inline;>   <!-- strong emphasis -->
+<!ATTLIST strong %attrs;>
+
+<!ELEMENT sub %Inline;> <!-- subscript -->
+<!ATTLIST sub %attrs;>
+
+<!ELEMENT sup %Inline;> <!-- superscript -->
+<!ATTLIST sup %attrs;>
+
+<!ELEMENT tt %Inline;>   <!-- fixed pitch font -->
+<!ATTLIST tt %attrs;>
+
+<!ELEMENT i %Inline;>   <!-- italic font -->
+<!ATTLIST i %attrs;>
+
+<!ELEMENT b %Inline;>   <!-- bold font -->
+<!ATTLIST b %attrs;>
+
+<!ELEMENT big %Inline;>   <!-- bigger font -->
+<!ATTLIST big %attrs;>
+
+<!ELEMENT small %Inline;>   <!-- smaller font -->
+<!ATTLIST small %attrs;>
+
+<!--==================== Object ======================================-->
+<!--
+  object is used to embed objects as part of HTML pages.
+  param elements should precede other content. Parameters
+  can also be expressed as attribute/value pairs on the
+  object element itself when brevity is desired.
+-->
+
+<!ELEMENT object (#PCDATA | param | %block; | %inline; | %misc;)*>
+<!ATTLIST object
+  %attrs;
+  declare     (declare)      #IMPLIED
+  classid     %URI;          #IMPLIED
+  codebase    %URI;          #IMPLIED
+  data        %URI;          #IMPLIED
+  type        %ContentType;  #IMPLIED
+  codetype    %ContentType;  #IMPLIED
+  archive     %UriList;      #IMPLIED
+  standby     %Text;         #IMPLIED
+  height      %Length;       #IMPLIED
+  width       %Length;       #IMPLIED
+  usemap      %URI;          #IMPLIED
+  name        NMTOKEN        #IMPLIED
+  tabindex    %Number;       #IMPLIED
+  >
+
+<!--
+  param is used to supply a named property value.
+  In XML it would seem natural to follow RDF and support an
+  abbreviated syntax where the param elements are replaced
+  by attribute value pairs on the object start tag.
+-->
+<!ELEMENT param EMPTY>
+<!ATTLIST param
+  id          ID             #IMPLIED
+  name        CDATA          #IMPLIED
+  value       CDATA          #IMPLIED
+  valuetype   (data|ref|object) "data"
+  type        %ContentType;  #IMPLIED
+  >
+
+<!--=================== Images ===========================================-->
+
+<!--
+   To avoid accessibility problems for people who aren't
+   able to see the image, you should provide a text
+   description using the alt and longdesc attributes.
+   In addition, avoid the use of server-side image maps.
+   Note that in this DTD there is no name attribute. That
+   is only available in the transitional and frameset DTD.
+-->
+
+<!ELEMENT img EMPTY>
+<!ATTLIST img
+  %attrs;
+  src         %URI;          #REQUIRED
+  alt         %Text;         #REQUIRED
+  longdesc    %URI;          #IMPLIED
+  height      %Length;       #IMPLIED
+  width       %Length;       #IMPLIED
+  usemap      %URI;          #IMPLIED
+  ismap       (ismap)        #IMPLIED
+  >
+
+<!-- usemap points to a map element which may be in this document
+  or an external document, although the latter is not widely supported -->
+
+<!--================== Client-side image maps ============================-->
+
+<!-- These can be placed in the same document or grouped in a
+     separate document although this isn't yet widely supported -->
+
+<!ELEMENT map ((%block; | %misc;)+ | area+)>
+<!ATTLIST map
+  %i18n;
+  %events;
+  id          ID             #REQUIRED
+  class       CDATA          #IMPLIED
+  style       %StyleSheet;   #IMPLIED
+  title       %Text;         #IMPLIED
+  name        NMTOKEN        #IMPLIED
+  >
+
+<!ELEMENT area EMPTY>
+<!ATTLIST area
+  %attrs;
+  %focus;
+  shape       %Shape;        "rect"
+  coords      %Coords;       #IMPLIED
+  href        %URI;          #IMPLIED
+  nohref      (nohref)       #IMPLIED
+  alt         %Text;         #REQUIRED
+  >
+
+<!--================ Forms ===============================================-->
+
+
+<!--
+  Each label must not contain more than ONE field
+  Label elements shouldn't be nested.
+-->
+<!ELEMENT label %Inline;>
+<!ATTLIST label
+  %attrs;
+  for         IDREF          #IMPLIED
+  accesskey   %Character;    #IMPLIED
+  onfocus     %Script;       #IMPLIED
+  onblur      %Script;       #IMPLIED
+  >
+
+<!ENTITY % InputType
+  "(text | password | checkbox |
+    radio | submit | reset |
+    file | hidden | image | button)"
+   >
+
+<!-- the name attribute is required for all but submit & reset -->
+
+<!ELEMENT input EMPTY>     <!-- form control -->
+<!ATTLIST input
+  %attrs;
+  %focus;
+  type        %InputType;    "text"
+  name        CDATA          #IMPLIED
+  value       CDATA          #IMPLIED
+  checked     (checked)      #IMPLIED
+  disabled    (disabled)     #IMPLIED
+  readonly    (readonly)     #IMPLIED
+  size        CDATA          #IMPLIED
+  maxlength   %Number;       #IMPLIED
+  src         %URI;          #IMPLIED
+  alt         CDATA          #IMPLIED
+  usemap      %URI;          #IMPLIED
+  onselect    %Script;       #IMPLIED
+  onchange    %Script;       #IMPLIED
+  accept      %ContentTypes; #IMPLIED
+  >
+
+<!ELEMENT select (optgroup|option)+>  <!-- option selector -->
+<!ATTLIST select
+  %attrs;
+  name        CDATA          #IMPLIED
+  size        %Number;       #IMPLIED
+  multiple    (multiple)     #IMPLIED
+  disabled    (disabled)     #IMPLIED
+  tabindex    %Number;       #IMPLIED
+  onfocus     %Script;       #IMPLIED
+  onblur      %Script;       #IMPLIED
+  onchange    %Script;       #IMPLIED
+  >
+
+<!ELEMENT optgroup (option)+>   <!-- option group -->
+<!ATTLIST optgroup
+  %attrs;
+  disabled    (disabled)     #IMPLIED
+  label       %Text;         #REQUIRED
+  >
+
+<!ELEMENT option (#PCDATA)>     <!-- selectable choice -->
+<!ATTLIST option
+  %attrs;
+  selected    (selected)     #IMPLIED
+  disabled    (disabled)     #IMPLIED
+  label       %Text;         #IMPLIED
+  value       CDATA          #IMPLIED
+  >
+
+<!ELEMENT textarea (#PCDATA)>     <!-- multi-line text field -->
+<!ATTLIST textarea
+  %attrs;
+  %focus;
+  name        CDATA          #IMPLIED
+  rows        %Number;       #REQUIRED
+  cols        %Number;       #REQUIRED
+  disabled    (disabled)     #IMPLIED
+  readonly    (readonly)     #IMPLIED
+  onselect    %Script;       #IMPLIED
+  onchange    %Script;       #IMPLIED
+  >
+
+<!--
+  The fieldset element is used to group form fields.
+  Only one legend element should occur in the content
+  and if present should only be preceded by whitespace.
+-->
+<!ELEMENT fieldset (#PCDATA | legend | %block; | %inline; | %misc;)*>
+<!ATTLIST fieldset
+  %attrs;
+  >
+
+<!ELEMENT legend %Inline;>     <!-- fieldset label -->
+<!ATTLIST legend
+  %attrs;
+  accesskey   %Character;    #IMPLIED
+  >
+
+<!--
+ Content is %Flow; excluding a, form and form controls
+--> 
+<!ELEMENT button %button.content;>  <!-- push button -->
+<!ATTLIST button
+  %attrs;
+  %focus;
+  name        CDATA          #IMPLIED
+  value       CDATA          #IMPLIED
+  type        (button|submit|reset) "submit"
+  disabled    (disabled)     #IMPLIED
+  >
+
+<!--======================= Tables =======================================-->
+
+<!-- Derived from IETF HTML table standard, see [RFC1942] -->
+
+<!--
+ The border attribute sets the thickness of the frame around the
+ table. The default units are screen pixels.
+
+ The frame attribute specifies which parts of the frame around
+ the table should be rendered. The values are not the same as
+ CALS to avoid a name clash with the valign attribute.
+-->
+<!ENTITY % TFrame "(void|above|below|hsides|lhs|rhs|vsides|box|border)">
+
+<!--
+ The rules attribute defines which rules to draw between cells:
+
+ If rules is absent then assume:
+     "none" if border is absent or border="0" otherwise "all"
+-->
+
+<!ENTITY % TRules "(none | groups | rows | cols | all)">
+  
+<!-- horizontal alignment attributes for cell contents
+
+  char        alignment char, e.g. char=':'
+  charoff     offset for alignment char
+-->
+<!ENTITY % cellhalign
+  "align      (left|center|right|justify|char) #IMPLIED
+   char       %Character;    #IMPLIED
+   charoff    %Length;       #IMPLIED"
+  >
+
+<!-- vertical alignment attributes for cell contents -->
+<!ENTITY % cellvalign
+  "valign     (top|middle|bottom|baseline) #IMPLIED"
+  >
+
+<!ELEMENT table
+     (caption?, thead?, tfoot?, (tbody+|tr+))>
+<!ELEMENT caption  %Inline;>
+<!ELEMENT thead    (tr)+>
+<!ELEMENT tfoot    (tr)+>
+<!ELEMENT tbody    (tr)+>
+<!ELEMENT tr       (th|td)+>
+<!ELEMENT th       %Flow;>
+<!ELEMENT td       %Flow;>
+
+<!ATTLIST table
+  %attrs;
+  summary     %Text;         #IMPLIED
+  width       %Length;       #IMPLIED
+  border      %Pixels;       #IMPLIED
+  frame       %TFrame;       #IMPLIED
+  rules       %TRules;       #IMPLIED
+  cellspacing %Length;       #IMPLIED
+  cellpadding %Length;       #IMPLIED
+  >
+
+<!ATTLIST caption
+  %attrs;
+  >
+
+
+
+
+<!--
+    Use thead to duplicate headers when breaking table
+    across page boundaries, or for static headers when
+    tbody sections are rendered in scrolling panel.
+
+    Use tfoot to duplicate footers when breaking table
+    across page boundaries, or for static footers when
+    tbody sections are rendered in scrolling panel.
+
+    Use multiple tbody sections when rules are needed
+    between groups of table rows.
+-->
+<!ATTLIST thead
+  %attrs;
+  %cellhalign;
+  %cellvalign;
+  >
+
+<!ATTLIST tfoot
+  %attrs;
+  %cellhalign;
+  %cellvalign;
+  >
+
+<!ATTLIST tbody
+  %attrs;
+  %cellhalign;
+  %cellvalign;
+  >
+
+<!ATTLIST tr
+  %attrs;
+  %cellhalign;
+  %cellvalign;
+  >
+
+
+<!-- th is for headers, td for data and for cells acting as both -->
+
+<!ATTLIST th
+  %attrs;
+  abbr        %Text;         #IMPLIED
+  axis        CDATA          #IMPLIED
+  headers     IDREFS         #IMPLIED
+  rowspan     %Number;       "1"
+  colspan     %Number;       "1"
+  %cellhalign;
+  %cellvalign;
+  >
+
+<!ATTLIST td
+  %attrs;
+  abbr        %Text;         #IMPLIED
+  axis        CDATA          #IMPLIED
+  headers     IDREFS         #IMPLIED
+  rowspan     %Number;       "1"
+  colspan     %Number;       "1"
+  %cellhalign;
+  %cellvalign;
+  >
+
+<!-- aos form definition-->
+
+
+<!ENTITY % bgattrs 
+ "backgroundColor     CDATA   #IMPLIED
+  backgroundImg       CDATA   #IMPLIED
+  backgroundRepeat    CDATA   #IMPLIED 
+  backgroundPosition  CDATA   #IMPLIED ">
+
+<!ENTITY % sizeattrs 
+  "width    CDATA   #IMPLIED
+   height   CDATA   #IMPLIED">
+
+<!ENTITY % spaceattrs 
+ "leftSpace    CDATA   #IMPLIED
+  topSpace     CDATA   #IMPLIED
+  rightSpace   CDATA   #IMPLIED 
+  bottomSpace  CDATA   #IMPLIED ">
+
+<!ENTITY % idattr   "id    CDATA   #REQUIRED">
+<!ENTITY % nameattr "name    CDATA   #REQUIRED">
+
+<!ENTITY % hideattr "ishide (true | false)  #IMPLIED ">
+
+<!ENTITY % linktostateattr "linkToState CDATA #IMPLIED">
+
+<!ENTITY % checkattr 
+ "checkattr CDATA #IMPLIED
+  checks CDATA #IMPLIED ">
+
+
+<!ELEMENT Forms ((js | form | plugin | valueFetcher)*)>
+<!ELEMENT form (css?, import*, value*, var*, toolbar?, widgets?, extendPoint?, bind*)>
+
+
+<!ELEMENT toolbar (btn*)>
+<!ELEMENT btn (item*, basic?)>
+<!ELEMENT item EMPTY>
+<!ELEMENT widgets ((basic | layout | div)*)>
+<!ELEMENT layout ((basic | layout | div)*)>
+<!ELEMENT basic (value*, valueFetcher?, col*)>
+<!ELEMENT valueFetcher (plugin*, value*)>
+<!ELEMENT col (valueFetcher?, col*)>
+<!ELEMENT evnt (#PCDATA)>
+<!ELEMENT extendPoint (plugin*)>
+<!ELEMENT plugin (plugin*, value*)>
+<!ELEMENT value (#PCDATA)>
+<!ELEMENT var (#PCDATA)>
+<!ELEMENT import EMPTY>
+<!ELEMENT js (#PCDATA)>
+<!ELEMENT bind (#PCDATA)>
+<!ELEMENT css (#PCDATA)>
+
+
+<!ATTLIST form
+	%idattr; 
+	%bgattrs; 
+	%sizeattrs; 
+	formType CDATA #IMPLIED
+	attr CDATA #IMPLIED
+	extend CDATA #IMPLIED
+	implement CDATA #IMPLIED
+	head CDATA #IMPLIED
+	foot CDATA #IMPLIED
+	valign CDATA #IMPLIED
+	js CDATA #IMPLIED
+	desp CDATA #IMPLIED
+	states CDATA #IMPLIED
+	version CDATA #IMPLIED
+	abstract (true | false) "false"
+	tablebase (true | false) "true"
+	contextmenu (true | false) "false"
+>
+<!ATTLIST import
+	class CDATA #IMPLIED
+	file CDATA #IMPLIED
+	language (javascript | vbscript | css) "javascript"
+>
+<!ATTLIST toolbar
+    %hideattr;
+	template CDATA #IMPLIED
+	buttons CDATA #IMPLIED
+	ban CDATA #IMPLIED
+	attr CDATA #IMPLIED
+	ignore (true | false) "false"
+>
+<!ATTLIST btn
+	id CDATA #IMPLIED
+	%sizeattrs; 
+    %hideattr;
+	%linktostateattr;
+	text CDATA #IMPLIED
+	img CDATA #IMPLIED
+	rightImg CDATA #IMPLIED
+	hint CDATA #IMPLIED
+	gotoState CDATA #IMPLIED
+	onclick CDATA #IMPLIED
+	attr CDATA #IMPLIED
+	itemextway (before | after | override) "after"
+>
+<!ATTLIST item
+	id CDATA #IMPLIED
+    %hideattr;
+	%linktostateattr;
+	text CDATA #REQUIRED
+	img CDATA #IMPLIED
+	gotoState CDATA #IMPLIED
+	onclick CDATA #IMPLIED
+	attr CDATA #IMPLIED
+	check (true | false) "false"
+	checked (true | false) "false"
+>
+<!ATTLIST layout
+	name  CDATA #IMPLIED  
+	%bgattrs; 
+	%sizeattrs; 
+	%spaceattrs; 
+    %hideattr;
+	%linktostateattr;
+	type CDATA #REQUIRED
+	layout CDATA #IMPLIED
+	align (left | right | center) "left"
+	ignore (true | false) "false"
+	attr CDATA #IMPLIED
+	desp CDATA #IMPLIED
+	scrollx (true | false) "false"
+	scrolly (true | false) "false"
+	colspan CDATA #IMPLIED
+	itemextway (before | after | override) "after"
+	class CDATA #IMPLIED
+>
+<!ATTLIST basic
+	%nameattr; 
+	%bgattrs; 
+	%sizeattrs; 
+	%spaceattrs; 
+    %hideattr;
+	%checkattr;
+	%linktostateattr;
+	label CDATA #IMPLIED
+	labelWidth CDATA #IMPLIED
+	layout CDATA #IMPLIED
+	widget CDATA #IMPLIED
+	default CDATA #IMPLIED
+	attr CDATA #IMPLIED
+	referWidgets CDATA #IMPLIED
+	hint CDATA #IMPLIED
+	readonly CDATA #IMPLIED
+	disabled (true | false) "false"
+	maxlength CDATA #IMPLIED
+	inline (first | last | single | middle | inner) "middle"
+	ignore (true | false) "false"
+	require (true | false) "false"
+	align (left | right | center) "left"
+	onblur CDATA #IMPLIED
+	onfocus CDATA #IMPLIED
+	onchange CDATA #IMPLIED
+	onclick CDATA #IMPLIED
+	ondbclick CDATA #IMPLIED
+	onkeydown CDATA #IMPLIED
+	onkeyup CDATA #IMPLIED
+	canBeReset (true | false) "true"
+	autoSubmit (true | false) "true"
+	extendcol (true | false) "true"
+	itemextway (before | after) "after"
+	tabfocus (true | false) "true"
+	tabidx CDATA #IMPLIED
+	colspan CDATA #IMPLIED
+	placeholder CDATA #IMPLIED
+	style CDATA #IMPLIED
+	class CDATA #IMPLIED
+	fontFamily CDATA #IMPLIED
+	fontSize CDATA #IMPLIED
+	color CDATA #IMPLIED
+	lineHeight CDATA #IMPLIED
+	letterspacing CDATA #IMPLIED
+	url CDATA #IMPLIED
+>
+<!ATTLIST valueFetcher
+	id   CDATA #IMPLIED
+	ctg  CDATA #IMPLIED
+	type CDATA #IMPLIED
+>
+<!ATTLIST col
+	id CDATA #IMPLIED 
+    %hideattr;
+	%checkattr;
+	label CDATA #REQUIRED
+	cacu CDATA #IMPLIED
+	formula CDATA #IMPLIED
+	pageCacuExp CDATA #IMPLIED
+	default CDATA #IMPLIED
+	img CDATA #IMPLIED
+	attr CDATA #IMPLIED
+	referCols CDATA #IMPLIED
+	referWidgets CDATA #IMPLIED
+	width CDATA #IMPLIED
+	minWidth CDATA #IMPLIED
+	require (true | false) "false"
+	sort CDATA #IMPLIED
+	filter CDATA #IMPLIED
+	align CDATA #IMPLIED
+	href CDATA #IMPLIED
+	color CDATA #IMPLIED
+	maxlength CDATA #IMPLIED
+	editType (int | text | password | textarea | num | btn | check | radio | select | multiSelect | date | refer | editRefer | txt) "txt"
+	dType (str | num) "str"
+	inputFormator CDATA #IMPLIED
+	style CDATA #IMPLIED
+	headAlign CDATA #IMPLIED
+	renderer CDATA #IMPLIED
+	title CDATA #IMPLIED
+	resizable (true | false) "true"
+	lock (true | false) "false"
+	ignore (true | false) "false"
+	sum (true | false) "false"
+	prec CDATA #IMPLIED
+	disabled (true | false) "false"
+>
+<!ATTLIST evnt
+	type CDATA #REQUIRED
+>
+<!ATTLIST js
+	functionname CDATA #REQUIRED
+	desp CDATA #IMPLIED
+>
+<!ATTLIST extendPoint
+	addglobe (true | false) "true"
+	service CDATA #IMPLIED
+>
+<!ATTLIST plugin
+	type CDATA #IMPLIED
+	attr CDATA #IMPLIED
+	desp CDATA #IMPLIED
+	idx CDATA #IMPLIED
+	onEvent CDATA #IMPLIED
+	createEvent CDATA #IMPLIED
+	submitEvent CDATA #IMPLIED
+	id CDATA #IMPLIED
+	parent CDATA #IMPLIED
+>
+<!ATTLIST value
+	name CDATA #REQUIRED
+>
+<!ATTLIST var
+	name CDATA #REQUIRED
+>
+<!ATTLIST bind
+	element CDATA #REQUIRED
+	event CDATA #REQUIRED
+	param CDATA #IMPLIED
+	extendway (before | after | override | all | base) "base"
+>
+

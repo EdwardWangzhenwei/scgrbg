@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Foxit OFD Reader FireFox Plugin</title>
+<script type="text/javascript" src="res/npapi/Foxit_npapi.js" charset="UTF-8"></script>
+</head>
+
+<script type="text/javascript">
+var ocx;
+function load()
+{
+	ocx = foxit.ofdReaderInit("FireFoxOFDDIV","auto","auto");
+	if (ocx) 
+	{
+		//ocx.setCompsiteVisible([ "menu" ], false);
+	}
+	//openFile();
+};
+
+function openFile() 
+{
+	var url = "http://192.168.1.15:8082/uploadfile/20140805140544-905739.ofd";
+	url = "/opentest/2014-07-0820140708093829-648338.ofd";
+	alert(url);
+    ocx.openFile(url);
+}
+
+function saveFile() 
+{
+    ocx.saveFile("http://demo17.foxitsoftware.com/foxit-upload-ofd/fileupload.do?fileid=3fa915da4864455db6f429f9226dc635&userid=03d1ac9b44f94fbab79003ab009508a1&uploadpage=fileupload.do&updatename=&flag=1");
+}
+
+function closeFile() 
+{
+	ocx.closeFile();
+}
+
+</script>
+
+<body onload="load()">
+<div id="buttonDiv" style="padding:10px;">
+	<input type="button" value="打开" onclick="openFile();" /> 
+	<input type="button" value="保存" onclick="saveFile();" /> 
+	<input type="button" value="关闭" onclick="closeFile();" />
+	</div>
+	<div id="FireFoxOFDDIV" style="padding:0px 10px 30px 10px;">
+	</div>
+	
+	
+</body>
+
+</html>
