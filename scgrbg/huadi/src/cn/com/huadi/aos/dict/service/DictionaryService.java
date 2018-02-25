@@ -396,7 +396,7 @@ public class DictionaryService {
 		DbSvr db = DbSvr.getDbService("acc_sys");
 		String sql = db.getPureSQL("dictionary.getDictionaryInfoByUperId");
 		List<Map> map = db.getListResult(sql, dictId);
-		System.err.println(sql);
+
 		return map;
 	}
 	/**
